@@ -1,0 +1,6 @@
+Topic,Subtopic,Status,Result
+Evaluation Metrics,Dice Similarity Coefficient / DSC,COMPLETE,0.748049553870 ± 0.031999993653
+Evaluation Metrics,IoU / Jaccard,COMPLETE,0.610534701872 ± 0.036904187531
+Evaluation Metrics,Sensitivity,COMPLETE,0.745722782031 ± 0.061037864849
+Evaluation Metrics,Specificity,COMPLETE,0.999688903970 ± 0.000205231021
+Evaluation Metrics,Hausdorff Distance / HD95,COMPLETE,8.643581867636 ± 2.269264959846
