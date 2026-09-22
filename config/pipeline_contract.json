@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "system": "GraphMS v3.5.1 Hybrid",
+  "protocol_sha": "8944f1a0deef8a7d0eb57118b4b45e3eed0bc803a2c0e93d63d9c9eaba6578a3",
+  "stage56_feature_protocol_sha": "1b2e14c1fe9e8f7e462241412d19a0402a3a524df6736a2237d339205017674f",
+  "stage56_runtime_impl_id": "v6-stage56-hardened-provenance-reuse-validate-20260919",
+  "stage7_impl_id": "v3.4.1-gat-fp32-dice-bce-adamw-cosine-baseline-preserving-selection",
+  "fusion_implementation_id": "v3.5-concat-se-self-multiscale-dice-bce-adamw-cosine-250iter",
+  "final_stage11": {
+    "name": "cross-fitted Stage11-v1",
+    "connectivity": 26,
+    "morphology": "none",
+    "folds": {
+      "0": {"threshold": 0.4, "minvox": 10},
+      "1": {"threshold": 0.4, "minvox": 10},
+      "2": {"threshold": 0.45, "minvox": 10},
+      "3": {"threshold": 0.4, "minvox": 10},
+      "4": {"threshold": 0.4, "minvox": 10}
+    }
+  },
+  "claim_scope": "development five-fold CV",
+  "cases": 93,
+  "fold_counts": {"0": 22, "1": 18, "2": 14, "3": 23, "4": 16},
+  "segmentation_metrics": {
+    "DSC": {"mean": 0.748049553870, "sd": 0.031999993653},
+    "IoU": {"mean": 0.610534701872, "sd": 0.036904187531},
+    "Sensitivity": {"mean": 0.745722782031, "sd": 0.061037864849},
+    "Specificity": {"mean": 0.999688903970, "sd": 0.000205231021},
+    "HD95_mm": {"mean": 8.643581867636, "sd": 2.269264959846}
+  },
+  "stage13": {
+    "classifier": {"family": "MRI_SPATIAL_SVM", "C": 30, "feature_set": "mri_spatial"},
+    "regressor": {"family": "MRI_SPATIAL_RIDGE", "alpha": 30, "feature_set": "mri_spatial"}
+  },
+  "multitask_branch_status": "IMPLEMENTED_EVALUATED_AUXILIARY_NOT_PROMOTED",
+  "current_pipeline_is_jointly_retrained": false,
+  "external_or_unseen_test_claim": false
+}
