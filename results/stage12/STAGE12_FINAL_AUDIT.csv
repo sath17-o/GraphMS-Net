@@ -1,0 +1,21 @@
+gate,status,details
+1. Exact final segmentation DSC reproduced,PASS,0.748049553870 expected 0.748049553870
+2. 93/93 final masks,PASS,93 masks; 93 unique ledger cases
+3. 93 unique case features,PASS,93 rows; 93 unique cases
+4. 53 patients,PASS,53
+5. GT not used for Stage12 feature extraction,PASS,all rows false
+6. No historical ResEncM test branch mixed into refreshed Hybrid package,PASS,INCLUDE_HISTORICAL_TEST=False; roles=['development_oof']
+7. lesion volume present,PASS,lesion_volume_mm3
+8. lesion count present,PASS,lesion_count
+9. area present,PASS,guide_max_slice_area_mm2
+10. perimeter present,PASS,guide_max_slice_perimeter_mm
+11. compactness present,PASS,guide_max_slice_compactness
+12. GLCM texture present,PASS,48 _glcm_ columns
+13. FLAIR/T1/T2 available,PASS,multimodal canonical feature families present
+14. canonical Stage12 atlas/spatial context available,PASS,Harvard-Oxford maxprob-thr25-2mm
+15. Stage13 feature-column contract satisfied,PASS,107 imaging contract columns present
+16. 93 Hybrid-development clinical joins,PASS,93 Hybrid-development clinical joins
+17. manifest complete,PASS,COMPLETE
+18. Stage13 development table produced,PASS,/content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/graphms_hybrid_stage12_final_v1/stage13_DEV_ONLY_93_crosssectional.csv
+19. Canonical v2.1 table schema preserved,PASS,170 columns match prior audited table header
+20. Canonical filter5 is idempotent on final Stage11 masks,PASS,0 changed masks
