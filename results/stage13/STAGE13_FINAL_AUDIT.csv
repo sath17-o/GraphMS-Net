@@ -1,0 +1,34 @@
+gate,status,details
+1. Stage12 manifest COMPLETE,PASS,COMPLETE
+2. Stage12 final audit all PASS,PASS,{'PASS': 20}
+3. Exact Stage12 schema v2.1,PASS,GraphMSNet-Stage12-MAX-v2.1
+4. 93 development scans,PASS,93
+5. 53 patients,PASS,53
+6. 93 unique case IDs,PASS,93
+7. development_oof role only,PASS,['development_oof']
+8. No missing target_edss,PASS,0
+9. No missing target_edss_ge4,PASS,0
+10. Patient-grouped classification CV,PASS,[]
+11. Patient-grouped regression CV,PASS,[]
+12. No patient overlap train/validation,PASS,"class=0, reg=0"
+13. Exactly 12 outer classifier results,PASS,12
+14. Exactly 12 outer regressor results,PASS,12
+15. Classifier family exactly MRI_SPATIAL_SVM,PASS,"[{'name': 'MRI_SPATIAL_SVM', 'family': 'linear_svm', 'feature_set': 'mri_spatial', 'grid': [{'C': 30.0}], 'role': 'FIXED_PRIMARY_GUIDE_ALIGNED_REFRESH'}]"
+16. Classifier C exactly 30,PASS,{'C': 30.0}
+17. Regressor family exactly MRI_SPATIAL_RIDGE,PASS,"[{'name': 'MRI_SPATIAL_RIDGE', 'family': 'ridge', 'feature_set': 'mri_spatial', 'grid': [{'alpha': 30.0}], 'role': 'FIXED_PRIMARY_GUIDE_ALIGNED_REFRESH'}]"
+18. Ridge alpha exactly 30,PASS,{'alpha': 30.0}
+19. Feature set exactly mri_spatial,PASS,mri_spatial / mri_spatial
+20. Primary models contain no age/sex/ms_type,PASS,"class=['log_lesion_volume', 'lesion_volume_normalized', 'lesion_count', 'largest_lesion_fraction', 'approx_brain_volume_mm3', 'atlas_brainstem_overlap_mm3', 'atlas_cortical_overlap_mm3', 'atlas_subcortical_overlap_mm3', 'periventricular_fraction_le3mm', 'ventricle_distance_mean_mm', 'lesion_world_x_std_mm', 'lesion_world_y_std_mm', 'lesion_world_z_std_mm']; reg=['log_lesion_volume', 'lesion_volume_normalized', 'lesion_count', 'largest_lesion_fraction', 'approx_brain_volume_mm3', 'atlas_brainstem_overlap_mm3', 'atlas_cortical_overlap_mm3', 'atlas_subcortical_overlap_mm3', 'periventricular_fraction_le3mm', 'ventricle_distance_mean_mm', 'lesion_world_x_std_mm', 'lesion_world_y_std_mm', 'lesion_world_z_std_mm']"
+21. Historical test never loaded,PASS,False / False / False
+22. Deep embeddings not newly extracted,PASS,"available=False, columns=0"
+23. Fixed classification aggregated OOF = 93 cases,PASS,93 / 93
+24. Fixed regression aggregated OOF = 93 cases,PASS,93 / 93
+25. Classification model artifact exists,PASS,/content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/graphms_hybrid_stage13_final_v1/stage13_primary_edss_ge4_classifier.joblib
+26. Regression model artifact exists,PASS,/content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/graphms_hybrid_stage13_final_v1/stage13_primary_edss_regressor.joblib
+27. Classification lock exists,PASS,/content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/graphms_hybrid_stage13_final_v1/STAGE13_CLASSIFICATION_MODEL_LOCK.json
+28. Regression lock exists,PASS,/content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/graphms_hybrid_stage13_final_v1/STAGE13_REGRESSION_MODEL_LOCK.json
+29. Both lock dev_sha256 values equal current refreshed Stage12 dev SHA,PASS,class=b38886f43bb4b0e296c9716257478b9f93c8161dcdae1b34231b1894ada01eb4; reg=b38886f43bb4b0e296c9716257478b9f93c8161dcdae1b34231b1894ada01eb4; current=b38886f43bb4b0e296c9716257478b9f93c8161dcdae1b34231b1894ada01eb4
+30. Joblib run fingerprints match final manifest,PASS,class=0883979e8ef5f313f231ed08fa8e0a7d419c4cddb16cf79b9d87b9076da270be; reg=0883979e8ef5f313f231ed08fa8e0a7d419c4cddb16cf79b9d87b9076da270be; manifest=0883979e8ef5f313f231ed08fa8e0a7d419c4cddb16cf79b9d87b9076da270be
+31. Classification metrics finite,PASS,nested_auc=0.7255711553945249; fixed_auc=0.7474537037037038
+32. Regression metrics finite,PASS,nested_rmse=1.6651184662149063; fixed_rmse=1.671117674944858
+33. Manifest COMPLETE,PASS,COMPLETE
