@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "PACKAGING_IN_PROGRESS",
+  "note": "Large neural checkpoints are intentionally not committed to Git history. Inference-only release assets will be registered here with SHA-256 values before RUN_GRAPHMS.bat is declared evaluator-ready.",
+  "required_for_patient_inference": [
+    {"id": "resencm250_fold_models", "status": "PENDING_RELEASE_PACKAGING"},
+    {"id": "gat_fold_models", "status": "PENDING_RELEASE_PACKAGING"},
+    {"id": "hybrid_fusion_fold_models", "status": "PENDING_RELEASE_PACKAGING"},
+    {"id": "demo_or_user_mri_inputs", "status": "INPUT_REQUIRED"}
+  ],
+  "bundled_small_models": [
+    {"id": "stage13_classifier", "path": "pretrained/stage13/stage13_primary_edss_ge4_classifier.joblib"},
+    {"id": "stage13_regressor", "path": "pretrained/stage13/stage13_primary_edss_regressor.joblib"}
+  ]
+}
