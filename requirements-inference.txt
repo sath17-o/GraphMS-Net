@@ -1,0 +1,9 @@
+# Frozen GraphMS inference environment.
+# Heavy neural inference dependencies will be pinned when the inference-only
+# checkpoint bundle is published.
+numpy>=1.26,<3
+pandas>=2.0,<3
+scipy>=1.11,<2
+nibabel>=5.2,<6
+joblib>=1.3,<2
+scikit-learn==1.6.1
