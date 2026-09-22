@@ -1,0 +1,66 @@
+{
+  "atlas_spatial_context": "Harvard-Oxford + periventricular canonical v2.1 context",
+  "connectivity": 26,
+  "created_utc": "2026-09-21T18:19:43.642778+00:00",
+  "extractor_lineage": "existing audited canonical v2.1 Stage12 engine",
+  "feature_schema_version": "GraphMSNet-Stage12-MAX-v2.1",
+  "final_audit_status": "PASS",
+  "frozen_equal_fold_dsc": 0.748049553870348,
+  "fusion_implementation_id": "v3.5-concat-se-self-multiscale-dice-bce-adamw-cosine-250iter",
+  "ground_truth_mask_used_for_features": false,
+  "ground_truth_usage": "segmentation verification only, before Stage12 extraction",
+  "guide_stage": "Lesion Feature Extraction",
+  "historical_test_included": false,
+  "important_output_sha256": {
+    "FINAL_HYBRID_MASK_LEDGER.csv": "f8ba819f1c3488f1c73d13a726445388a91aaaa564a52b6f261d5f5a8fc4edff",
+    "FINAL_SEGMENTATION_HANDOFF.json": "97d930dd5bb98c074852f8d14b873ed20cccccfb78b3f9952eea9a670fc77173",
+    "STAGE13_RECOMMENDED_FEATURE_COLUMNS.json": "39aa96f1e8313bf007b066ef1b5bcc27c9008f44e5fbc941062c0238bba85371",
+    "stage12_case_features_final_hybrid_93.csv": "da4da15f04992b51659651d0b1cb6377b712adc97f9e9b1a042f3c03cffc70f4",
+    "stage12_lesion_components_final_hybrid_93.csv": "a0c26343bf3fbc79e287904fe1691f253217d8df58533757e9ccbae3aac1043b",
+    "stage13_DEV_ONLY_93_crosssectional.csv": "b38886f43bb4b0e296c9716257478b9f93c8161dcdae1b34231b1894ada01eb4"
+  },
+  "inference": "original uniform-overlap Hybrid stored probabilities; no new inference",
+  "morphology": "none",
+  "n_cases": 93,
+  "n_patients": 53,
+  "new_neural_inference_performed": false,
+  "new_training_performed": false,
+  "protocol_sha": "8944f1a0deef8a7d0eb57118b4b45e3eed0bc803a2c0e93d63d9c9eaba6578a3",
+  "segmentation_parent": "GraphMS v3.5.1 Hybrid",
+  "stage": 12,
+  "stage11_cross_fitted_recipes": {
+    "0": {
+      "connectivity": 26,
+      "minvox": 10,
+      "morphology": "none",
+      "threshold": 0.4
+    },
+    "1": {
+      "connectivity": 26,
+      "minvox": 10,
+      "morphology": "none",
+      "threshold": 0.4
+    },
+    "2": {
+      "connectivity": 26,
+      "minvox": 10,
+      "morphology": "none",
+      "threshold": 0.45
+    },
+    "3": {
+      "connectivity": 26,
+      "minvox": 10,
+      "morphology": "none",
+      "threshold": 0.4
+    },
+    "4": {
+      "connectivity": 26,
+      "minvox": 10,
+      "morphology": "none",
+      "threshold": 0.4
+    }
+  },
+  "stage13_development_handoff": "stage13_DEV_ONLY_93_crosssectional.csv",
+  "stage13_feature_contract_satisfied": true,
+  "status": "COMPLETE"
+}

@@ -1,0 +1,20 @@
+{
+  "run_fingerprint": "0883979e8ef5f313f231ed08fa8e0a7d419c4cddb16cf79b9d87b9076da270be",
+  "family": "MRI_SPATIAL_SVM",
+  "params": {
+    "C": 30.0
+  },
+  "feature_set": "mri_spatial",
+  "thresholds": {
+    "balanced_threshold": 0.1686651674712726,
+    "high_sensitivity_threshold": 0.12068595966348716,
+    "high_sensitivity_target": 0.75
+  },
+  "platt_coef": 0.21903762126205842,
+  "platt_intercept": -1.215691856123742,
+  "dev_sha256": "b38886f43bb4b0e296c9716257478b9f93c8161dcdae1b34231b1894ada01eb4",
+  "stage12_contract_sha256": "39aa96f1e8313bf007b066ef1b5bcc27c9008f44e5fbc941062c0238bba85371",
+  "stage13_version": "GraphMSNet-Stage13-HYBRID-REFRESH-v1",
+  "parent_stage13_version": "GraphMSNet-Stage13-MAX-v1.2",
+  "lock_id": "26f3930ca1d22f169a7bf9c09f9648b183b73b5dde0f8968c96be8cb6ffd5720"
+}

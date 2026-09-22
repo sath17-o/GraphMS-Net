@@ -1,0 +1,155 @@
+{
+  "status": "COMPLETE",
+  "stage": "13 Risk Prediction",
+  "stage13_version": "GraphMSNet-Stage13-HYBRID-REFRESH-v1",
+  "parent_stage13_version": "GraphMSNet-Stage13-MAX-v1.2",
+  "created_utc": "2026-09-22T02:01:40.962506+00:00",
+  "claim_scope": "development patient-grouped CV",
+  "evaluation_scope_detail": "development patient-grouped repeated nested/fixed OOF",
+  "run_fingerprint": "0883979e8ef5f313f231ed08fa8e0a7d419c4cddb16cf79b9d87b9076da270be",
+  "stage12_parent": "graphms_hybrid_stage12_final_v1",
+  "stage12_dev_sha256": "b38886f43bb4b0e296c9716257478b9f93c8161dcdae1b34231b1894ada01eb4",
+  "stage12_contract_sha256": "39aa96f1e8313bf007b066ef1b5bcc27c9008f44e5fbc941062c0238bba85371",
+  "stage12_schema": "GraphMSNet-Stage12-MAX-v2.1",
+  "segmentation_parent": "GraphMS v3.5.1 Hybrid",
+  "protocol_sha": "8944f1a0deef8a7d0eb57118b4b45e3eed0bc803a2c0e93d63d9c9eaba6578a3",
+  "fusion_implementation_id": "v3.5-concat-se-self-multiscale-dice-bce-adamw-cosine-250iter",
+  "segmentation_dsc": 0.74804955387,
+  "development": {
+    "scans": 93,
+    "patients": 53,
+    "unique_cases": 93,
+    "roles": [
+      "development_oof"
+    ],
+    "edss_ge4_scans": 14,
+    "edss_ge4_patients": 9
+  },
+  "protocol": {
+    "outer_seeds": [
+      42,
+      123,
+      7
+    ],
+    "outer_splits": 4,
+    "inner_splits": 3,
+    "outer_cv": "3 repeats x 4-fold patient-level StratifiedKFold, mapped to scans",
+    "inner_cv": "3-fold patient-level StratifiedKFold, mapped to scans",
+    "group": "patient_id",
+    "patient_equal_weighting": true,
+    "classification_class_balancing": true,
+    "oof_platt_calibration": {
+      "family": "LogisticRegression",
+      "C": 1.0,
+      "solver": "lbfgs",
+      "max_iter": 5000,
+      "random_state": 42,
+      "sample_weight": "patient_equal_weights"
+    },
+    "threshold_tuning": "verified v1.2 tune_thresholds; development OOF only",
+    "high_sensitivity_minimum": 0.75,
+    "bootstrap": "2000 patient-cluster resamples"
+  },
+  "primary_classification": {
+    "family": "MRI_SPATIAL_SVM",
+    "underlying_family": "linear_svm",
+    "params": {
+      "C": 30.0
+    },
+    "feature_set": "mri_spatial",
+    "nested_cv": {
+      "family_name": "MRI_SPATIAL_SVM",
+      "role": "FIXED_PRIMARY_GUIDE_ALIGNED_REFRESH",
+      "feature_set": "mri_spatial",
+      "nested_auc_mean": 0.7255711553945249,
+      "nested_auc_std": 0.1621524446827513,
+      "nested_auc_median": 0.7771464646464645,
+      "nested_ap_mean": 0.4748725136880858,
+      "nested_ap_std": 0.20192027905919485,
+      "folds": 12
+    },
+    "fixed_oof_balanced": {
+      "roc_auc": 0.7474537037037038,
+      "average_precision": 0.4380290901894298,
+      "brier": 0.10800524607834144,
+      "accuracy": 0.7562893081761006,
+      "balanced_accuracy": 0.7280092592592592,
+      "sensitivity": 0.6874999999999999,
+      "specificity": 0.7685185185185185,
+      "precision": 0.34554973821989526,
+      "f1": 0.45993031358885017
+    },
+    "fixed_oof_high_sensitivity": {
+      "roc_auc": 0.7474537037037038,
+      "average_precision": 0.4380290901894298,
+      "brier": 0.10800524607834144,
+      "accuracy": 0.5974842767295597,
+      "balanced_accuracy": 0.6858796296296297,
+      "sensitivity": 0.8125000000000001,
+      "specificity": 0.5592592592592593,
+      "precision": 0.2468354430379747,
+      "f1": 0.3786407766990291
+    },
+    "thresholds": {
+      "balanced_threshold": 0.1686651674712726,
+      "high_sensitivity_threshold": 0.12068595966348716,
+      "high_sensitivity_target": 0.75
+    },
+    "classification_lock_id": "26f3930ca1d22f169a7bf9c09f9648b183b73b5dde0f8968c96be8cb6ffd5720",
+    "artifact": "/content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/graphms_hybrid_stage13_final_v1/stage13_primary_edss_ge4_classifier.joblib"
+  },
+  "primary_regression": {
+    "family": "MRI_SPATIAL_RIDGE",
+    "underlying_family": "ridge",
+    "params": {
+      "alpha": 30.0
+    },
+    "feature_set": "mri_spatial",
+    "nested_cv": {
+      "family_name": "MRI_SPATIAL_RIDGE",
+      "role": "FIXED_PRIMARY_GUIDE_ALIGNED_REFRESH",
+      "feature_set": "mri_spatial",
+      "nested_rmse_mean": 1.6651184662149063,
+      "nested_rmse_std": 0.22963013456795878,
+      "nested_rmse_median": 1.6013423428347076,
+      "nested_mae_mean": 1.3934033178594134,
+      "nested_mae_std": 0.2442533947593619,
+      "nested_r2_mean": 0.06653987822712337,
+      "nested_spearman_mean": 0.20392798644036536,
+      "folds": 12
+    },
+    "fixed_oof": {
+      "mae": 1.3944969423411544,
+      "rmse": 1.671117674944858,
+      "r2": 0.09986836230641027,
+      "spearman_rho": 0.1782262104189033
+    },
+    "regression_lock_id": "70301c52498c4202c8e58d6658a20d9a69e16ff00476d71361a0ce24edbc3a3f",
+    "artifact": "/content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/graphms_hybrid_stage13_final_v1/stage13_primary_edss_regressor.joblib"
+  },
+  "historical_stage13_v1_2_model_families_evaluated": [
+    "SVM",
+    "MLP",
+    "XGBoost",
+    "other internal comparators"
+  ],
+  "historical_stage13_1_rescue": "evaluated, not promoted",
+  "current_refresh_models_fitted": [
+    {
+      "family": "MRI_SPATIAL_SVM",
+      "C": 30.0
+    },
+    {
+      "family": "MRI_SPATIAL_RIDGE",
+      "alpha": 30.0
+    }
+  ],
+  "model_family_and_hyperparameter_choices_frozen_before_hybrid_refresh": true,
+  "historical_test_loaded_or_evaluated": false,
+  "historical_test_included": false,
+  "deep_embeddings_used": false,
+  "deep_embedding_note": "Deep-embedding alternatives were previously evaluated under the Stage13/Stage13.1 development program and were not promoted; no new embedding extraction is performed in this fixed-model refresh.",
+  "new_neural_training_performed": false,
+  "new_neural_inference_performed": false,
+  "classical_cpu_model_fitting_performed": true
+}
