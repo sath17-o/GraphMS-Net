@@ -1,0 +1,27 @@
+gate,status,details
+Stage12 COMPLETE,PASS,COMPLETE
+Stage12 audit PASS,PASS,20 rows; all PASS
+Stage13 COMPLETE,PASS,COMPLETE
+Stage13 33/33 audit PASS,PASS,33 / 33
+Stage14 COMPLETE,PASS,COMPLETE
+Stage14 28/28 audit PASS,PASS,28 / 28
+Optimizer diagram item satisfied,PASS,AdamW selected in completed final GraphMS v3.5.1 training.
+Final optimizer = AdamW,PASS,AdamW
+Learning-rate scheduling diagram item satisfied,PASS,Cosine decay / CosineAnnealingLR selected in completed final GraphMS training.
+Final scheduler = cosine / CosineAnnealingLR,PASS,cosine / CosineAnnealingLR
+Dropout diagram item satisfied,PASS,0.30
+dropout = 0.30,PASS,0.3
+Weight-decay diagram item satisfied,PASS,1e-4
+weight_decay = 1e-4,PASS,0.0001
+Final-model-selection diagram item satisfied,PASS,GraphMS v3.5.1 Hybrid — FINAL SELECTED SEGMENTATION MODEL
+selected model = GraphMS v3.5.1 Hybrid,PASS,GraphMS v3.5.1 Hybrid
+protocol SHA exact,PASS,8944f1a0deef8a7d0eb57118b4b45e3eed0bc803a2c0e93d63d9c9eaba6578a3
+fusion implementation exact,PASS,v3.5-concat-se-self-multiscale-dice-bce-adamw-cosine-250iter
+DSC exact,PASS,0.748049553870
+no new training,PASS,False
+no new neural inference,PASS,False
+Stage10 loss not incorrectly represented as a Stage15 item,PASS,Dice+BCE is upstream Stage10 provenance only
+Stage13 classical fitting not incorrectly represented as AdamW training,PASS,AdamW/cosine/dropout/weight-decay settings refer to the neural GraphMS segmentation training. Stage13 SVM/Ridge classical fitting remains separately documented under Stage13.
+Stage14 current pipeline not jointly retrained,PASS,false
+no external/unseen-test claim,PASS,development five-fold CV
+Stage15 manifest COMPLETE,PASS,COMPLETE
