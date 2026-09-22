@@ -1,0 +1,49 @@
+{
+  "status": "COMPLETE",
+  "stage": "15 Model Training",
+  "stage15_version": "GraphMSNet-Stage15-DIAGRAM-ALIGNED-v2",
+  "diagram_aligned": true,
+  "diagram_subtopics": [
+    "Optimizer \u2014 Adam / AdamW",
+    "Learning-rate scheduling",
+    "Dropout",
+    "Weight decay",
+    "Final model selection"
+  ],
+  "selected_optimizer": "AdamW",
+  "selected_scheduler": "CosineAnnealingLR",
+  "dropout": 0.3,
+  "weight_decay": 0.0001,
+  "final_model": "GraphMS v3.5.1 Hybrid",
+  "final_development_equal_fold_dsc": 0.74804955387,
+  "claim_scope": "development five-fold CV",
+  "protocol_sha": "8944f1a0deef8a7d0eb57118b4b45e3eed0bc803a2c0e93d63d9c9eaba6578a3",
+  "fusion_implementation_id": "v3.5-concat-se-self-multiscale-dice-bce-adamw-cosine-250iter",
+  "new_training_performed": false,
+  "new_neural_inference_performed": false,
+  "historical_test_loaded_or_evaluated": false,
+  "current_pipeline_is_jointly_retrained": false,
+  "stage12_parent": "graphms_hybrid_stage12_final_v1",
+  "stage13_parent": "graphms_hybrid_stage13_final_v1",
+  "stage14_parent": "graphms_hybrid_stage14_final_v1",
+  "stage14_multitask_status": "IMPLEMENTED_EVALUATED_AUXILIARY_NOT_PROMOTED",
+  "stage13_classical_boundary": "AdamW/cosine/dropout/weight-decay settings refer to the neural GraphMS segmentation training. Stage13 SVM/Ridge classical fitting remains separately documented under Stage13.",
+  "stage10_loss_provenance": {
+    "stage": "10 Loss Functions (Segmentation)",
+    "loss": "Dice+BCE",
+    "stage15_diagram_item": false
+  },
+  "training_source_v6_sha256": "a2fd197eda516d6d7794b89256060fc199cbed783e6d75601ecd38673b7cb6e9",
+  "stage14_notebook_sha256": "2d4a0876c8b87fd9997812cc75901feea400406392fafc7ce1769b7adb3ff037",
+  "upstream_hashes": {
+    "stage12_manifest_sha256": "113286dac0233cdb8159fb8d24b7bd666ad6f5927bb74d54e7b3f6ed31986f70",
+    "stage13_manifest_sha256": "d0c54f22dd28646f0b5e7015e06506db25019c76bdd7e86e426d001a2471cec2",
+    "stage14_manifest_sha256": "09208d01e3dbe313fea5cce50b03cfe39ec1a3fb0611454f3498ed203285086c",
+    "stage14_lock_sha256": "f612041299460780a02474069661aa31423a3e7b5f46e31d4fc4e2f1e5ebf2ea",
+    "stage12_audit_rows": 20,
+    "stage13_audit_rows": 33,
+    "stage14_audit_rows": 28
+  },
+  "final_audit_status": "PASS",
+  "completed_utc": "2026-09-22T08:03:33.429274+00:00"
+}

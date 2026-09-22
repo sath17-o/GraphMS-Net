@@ -1,0 +1,86 @@
+{
+  "status": "COMPLETE",
+  "stage": "16 Evaluation Metrics",
+  "stage16_version": "GraphMSNet-Stage16-DIAGRAM-ALIGNED-v1",
+  "diagram_aligned": true,
+  "diagram_subtopics": [
+    "Dice Similarity Coefficient / DSC",
+    "IoU / Jaccard",
+    "Sensitivity",
+    "Specificity",
+    "Hausdorff Distance / HD95"
+  ],
+  "final_model": "GraphMS v3.5.1 Hybrid",
+  "protocol_sha": "8944f1a0deef8a7d0eb57118b4b45e3eed0bc803a2c0e93d63d9c9eaba6578a3",
+  "fusion_implementation_id": "v3.5-concat-se-self-multiscale-dice-bce-adamw-cosine-250iter",
+  "stage11": "cross-fitted Stage11-v1",
+  "claim_scope": "development five-fold CV",
+  "n_cases": 93,
+  "n_folds": 5,
+  "fold_counts": {
+    "0": 22,
+    "1": 18,
+    "2": 14,
+    "3": 23,
+    "4": 16
+  },
+  "aggregation": "equal-weight mean of five outer-fold case means; sample SD across five folds",
+  "metrics": {
+    "DSC": {
+      "mean": 0.748049553870348,
+      "sample_sd": 0.0319999936530297,
+      "mean_plusminus_sd": "0.748049553870 \u00b1 0.031999993653"
+    },
+    "IoU": {
+      "mean": 0.6105347018715662,
+      "sample_sd": 0.03690418753107878,
+      "mean_plusminus_sd": "0.610534701872 \u00b1 0.036904187531"
+    },
+    "Sensitivity": {
+      "mean": 0.7457227820309009,
+      "sample_sd": 0.06103786484877203,
+      "mean_plusminus_sd": "0.745722782031 \u00b1 0.061037864849"
+    },
+    "Specificity": {
+      "mean": 0.9996889039704016,
+      "sample_sd": 0.00020523102132397164,
+      "mean_plusminus_sd": "0.999688903970 \u00b1 0.000205231021"
+    },
+    "HD95_mm": {
+      "mean": 8.643581867636073,
+      "sample_sd": 2.2692649598463497,
+      "mean_plusminus_sd": "8.643581867636 \u00b1 2.269264959846"
+    }
+  },
+  "new_training_performed": false,
+  "new_neural_inference_performed": false,
+  "historical_test_loaded_or_evaluated": false,
+  "external_or_unseen_test_claim": false,
+  "stage12_parent": "graphms_hybrid_stage12_final_v1",
+  "stage13_parent": "graphms_hybrid_stage13_final_v1",
+  "stage14_parent": "graphms_hybrid_stage14_final_v1",
+  "stage15_parent": "graphms_hybrid_stage15_final_v2",
+  "stage13_risk_reference_is_stage16_diagram_item": false,
+  "upstream_sha256": {
+    "stage12_manifest_sha256": "113286dac0233cdb8159fb8d24b7bd666ad6f5927bb74d54e7b3f6ed31986f70",
+    "stage13_manifest_sha256": "d0c54f22dd28646f0b5e7015e06506db25019c76bdd7e86e426d001a2471cec2",
+    "stage14_manifest_sha256": "09208d01e3dbe313fea5cce50b03cfe39ec1a3fb0611454f3498ed203285086c",
+    "stage15_manifest_sha256": "38ef1b11453116d61c1df2bad4efd17df808f26092ca82ca9a6ec92598acf9be",
+    "FINAL_HYBRID_MASK_LEDGER_sha256": "f8ba819f1c3488f1c73d13a726445388a91aaaa564a52b6f261d5f5a8fc4edff"
+  },
+  "stage16_output_table_sha256": {
+    "STAGE16_PER_CASE_METRICS.csv": "745faf367fecaaeda5ac6ac750749332a1603ee20c9615718d735fa32e6e591b",
+    "STAGE16_PER_FOLD_METRICS.csv": "66696e2aa4446d8b2bbb259dc6ead1ab86069d40ea4ac2a9759bc41a21cb08d3",
+    "STAGE16_5FOLD_MEAN_STD.csv": "c467acef982fd8ef82586a5f6fb0d584d7feadabf8c139f5fba28a38fc6a756e",
+    "STAGE16_TOPIC_SUBTOPIC_RESULT.csv": "d86298b74ff5c23f281fc772b802f9b4f1f9191e33283e16180e3fe1b2956978"
+  },
+  "stage13_risk_reference_sha256": "daa3119b8c625962ddc8c83ad302f553723f85a378e0247ce36cb68a785a06ba",
+  "source_notebook_sha256": {
+    "v6_training_and_stage16_source_notebook": "a2fd197eda516d6d7794b89256060fc199cbed783e6d75601ecd38673b7cb6e9",
+    "stage12_hybrid_handoff_notebook": "e2984f14c0ade2c1eb6d272b3b0d69bf589402abbd97fbbe427700ac2dd7772b",
+    "stage15_diagram_aligned_notebook": "250f7f7852e9ad5e9fbb25c116a45cb6f3a6c1200deda264b3ad271c4f487003"
+  },
+  "final_audit_status": "PASS",
+  "evaluation_lock": "/content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/graphms_hybrid_stage16_final_v1/STAGE16_FINAL_EVALUATION_LOCK.json",
+  "completed_utc": "2026-09-22T10:13:07.837238+00:00"
+}

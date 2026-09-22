@@ -1,0 +1,45 @@
+{
+  "status": "COMPLETE",
+  "stage": "14 Multi-task Learning",
+  "stage14_version": "GraphMSNet-Stage14-HYBRID-FINAL-LOCK-v1",
+  "guide_joint_objective": "L=lambda1*L(Dice+BCE)+lambda2*L_CE",
+  "multitask_branch_status": "IMPLEMENTED_EVALUATED_AUXILIARY_NOT_PROMOTED",
+  "current_pipeline_is_jointly_retrained": false,
+  "current_pipeline_mode": "linked frozen outputs / decoupled primary pipeline",
+  "stage12_parent": "graphms_hybrid_stage12_final_v1",
+  "stage13_parent": "graphms_hybrid_stage13_final_v1",
+  "segmentation_parent": "GraphMS v3.5.1 Hybrid",
+  "segmentation_dsc": 0.74804955387,
+  "classification_family": "MRI_SPATIAL_SVM",
+  "classification_params": {
+    "C": 30.0
+  },
+  "classification_feature_set": "mri_spatial",
+  "classification_lock_id": "26f3930ca1d22f169a7bf9c09f9648b183b73b5dde0f8968c96be8cb6ffd5720",
+  "regression_family": "MRI_SPATIAL_RIDGE",
+  "regression_params": {
+    "alpha": 30.0
+  },
+  "regression_feature_set": "mri_spatial",
+  "regression_lock_id": "70301c52498c4202c8e58d6658a20d9a69e16ff00476d71361a0ce24edbc3a3f",
+  "feature_set": "mri_spatial",
+  "stage13_run_fingerprint": "0883979e8ef5f313f231ed08fa8e0a7d419c4cddb16cf79b9d87b9076da270be",
+  "stage12_dev_sha256": "b38886f43bb4b0e296c9716257478b9f93c8161dcdae1b34231b1894ada01eb4",
+  "stage12_manifest_sha256": "113286dac0233cdb8159fb8d24b7bd666ad6f5927bb74d54e7b3f6ed31986f70",
+  "stage13_manifest_sha256": "d0c54f22dd28646f0b5e7015e06506db25019c76bdd7e86e426d001a2471cec2",
+  "historical_test_loaded_or_evaluated": false,
+  "historical_test_included": false,
+  "new_training_performed": false,
+  "new_neural_inference_performed": false,
+  "historical_true_joint_multitask_implemented": true,
+  "historical_true_joint_multitask_evaluated": true,
+  "historical_true_joint_multitask_promoted": false,
+  "claim_boundary": "Multi-task learning is claimed as implemented/evaluated historical auxiliary research evidence. The current final GraphMS v3.5.1 Hybrid pipeline is NOT claimed to have been jointly retrained with the refreshed Stage13 risk models.",
+  "source_reference": {
+    "guide_pdf_sha256": "14cc294620df9ab726e3ba7ee07d6e08441cac4526cb59d61dec27c58265e21c",
+    "historical_stage14_16_notebook_sha256": "e7d58e08e13cb457026f05d0de8e04bbe0d42ab01a3268d3542794691be66a9b",
+    "stage13_refresh_notebook_sha256": "dfdcfbf65593db7459a62fbf13331a99865f0d1a63c5d9b906df10aaed6c185e"
+  },
+  "final_audit_status": "PASS",
+  "completed_utc": "2026-09-22T02:54:26.956086+00:00"
+}
