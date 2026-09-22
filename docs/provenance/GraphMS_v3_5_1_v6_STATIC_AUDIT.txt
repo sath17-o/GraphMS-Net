@@ -1,0 +1,102 @@
+GraphMS v3.5.1 FINAL FOLDS1-4 I/O OPTIMIZED v6 — STATIC AUDIT
+
+source notebook: GraphMS_v3_5_1_FINAL_FOLDS1_4_IO_OPTIMIZED_v5.ipynb
+source SHA256: 1a949db148c94455c5d91fed1df7c194fbb66ff6a54cee318b39ff2f66498981
+output notebook: GraphMS_v3_5_1_FINAL_FOLDS1_4_IO_OPTIMIZED_v6.ipynb
+output SHA256: a2fd197eda516d6d7794b89256060fc199cbed783e6d75601ecd38673b7cb6e9
+
+JSON validation: PASS
+24/24 code-cell compile: PASS
+only intended executable cells changed: PASS
+v5 repair body unchanged: PASS
+v5 valid_remote_feature unchanged: PASS
+v5 stage_outer_feature_bank_local unchanged: PASS
+v5 validate_stage56_outer_complete body unchanged: PASS
+v5 build_feature_bank_outer body unchanged: PASS
+exact v6 runtime ID constant added: PASS
+builder exact runtime attribute attached: PASS
+validator exact runtime attribute attached: PASS
+runtime attributes attached after definitions: PASS
+Cell-20 exact v6 preflight installed: PASS
+v5 execution chain unchanged: PASS
+v5 93/93 all-reused fast path unchanged: PASS
+Stage5/6 new commits still use LEGACY_FEATURE_PROTOCOL_SHA: PASS
+strict remote validator unchanged: PASS
+actual NPZ/PKL SHA staging verification unchanged: PASS
+repair remains fail-closed: PASS
+scientific/training settings unchanged: PASS
+nested CV/fold logic unchanged: PASS
+GAT implementation unchanged: PASS
+Hybrid/model unchanged: PASS
+loss unchanged: PASS
+optimizer/scheduler unchanged: PASS
+GAT training unchanged: PASS
+Fusion training unchanged: PASS
+Stage11 unchanged: PASS
+prediction recovery unchanged: PASS
+GT LRU/GT optimization unchanged: PASS
+GAT LRU unchanged: PASS
+training GT reuse unchanged: PASS
+Hybrid sliding-window GT reuse unchanged: PASS
+protocol SHAs/dictionaries unchanged: PASS
+existing Stage7/Fusion implementation IDs unchanged: PASS
+simulated stale v3 runtime fails preflight: PASS
+simulated exact v6 runtime passes preflight: PASS
+
+executable code cells: 24
+compile failures: none
+changed notebook cells (0-based JSON indices): [11, 24]
+changed executable code cells (0-based JSON indices): [11, 24]
+
+Functional difference from v5:
+The only functional difference from v5 is the exact Stage5/6 runtime implementation lock.
+All v5 Stage5/6 repair/reuse/build/validate/staging behavior is preserved exactly.
+All scientific/model/training settings remain unchanged.
+
+Exact v6 implementation lock:
+STAGE56_RUNTIME_IMPL_ID = "v6-stage56-hardened-provenance-reuse-validate-20260919"
+build_feature_bank_outer._stage56_runtime_impl_id == STAGE56_RUNTIME_IMPL_ID
+validate_stage56_outer_complete._stage56_runtime_impl_id == STAGE56_RUNTIME_IMPL_ID
+
+Cell-20 preflight:
+- verifies the global exact v6 runtime implementation ID
+- verifies builder, validator, and repair function presence
+- verifies exact builder and validator function attributes
+- retains the builder co_names check for the repair invocation
+- executes before RUN_LOG=[] and before outer-fold execution
+
+Negative runtime simulation:
+Simulated stale v3 runtime:
+- repair_mislabeled_stage56_commits exists
+- actual old v3 build_feature_bank_outer definition exists
+- old v3 builder co_names includes repair_mislabeled_stage56_commits
+- exact v6 function attribute absent
+Expected result: Cell-20 runtime preflight FAILS BEFORE outer-fold execution.
+Observed result: PASS — failed with RuntimeError: STALE RUNTIME: active build_feature_bank_outer is not the exact hardened v6 implementation.
+
+Positive runtime simulation:
+Simulated exact v6 runtime:
+- exact v6 implementation ID active
+- exact v6 builder attribute active
+- exact v6 validator attribute active
+- builder invokes repair_mislabeled_stage56_commits
+Expected result: preflight PASS.
+Observed result: PASS.
+
+Preserved v5 chain:
+pre-repair
+-> determine reusable/missing
+-> build ONLY missing cases
+-> post-repair
+-> 93/93 strict remote provenance validation
+-> actual NPZ/PKL SHA-verified local staging
+-> GAT
+-> Fusion
+-> prediction
+
+Preserved v5 all-reused fast path:
+if all 93 Stage5/6 artifacts are valid, build_feature_bank_outer returns before loading ResEncM-250.
+
+No training was executed.
+No feature generation was executed.
+No Drive artifacts were modified.
