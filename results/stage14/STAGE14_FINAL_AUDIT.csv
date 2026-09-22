@@ -1,0 +1,29 @@
+gate,status,details
+1. Stage12 COMPLETE,PASS,COMPLETE
+2. Stage12 audit all PASS,PASS,20 rows; all PASS
+3. Stage13 COMPLETE,PASS,COMPLETE
+4. Stage13 audit all PASS,PASS,33 rows; all PASS
+5. Final segmentation parent exact,PASS,GraphMS v3.5.1 Hybrid
+6. Final segmentation DSC exact,PASS,0.748049553870348
+7. Classifier exact,PASS,MRI_SPATIAL_SVM
+8. Classifier C exactly 30,PASS,{'C': 30.0}
+9. Regressor exact,PASS,MRI_SPATIAL_RIDGE
+10. Ridge alpha exactly 30,PASS,{'alpha': 30.0}
+11. Feature set exactly mri_spatial,PASS,mri_spatial / mri_spatial
+12. Stage13 historical test disabled,PASS,loaded/evaluated=false; included=false
+13. Current classifier model exists,PASS,/content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/graphms_hybrid_stage13_final_v1/stage13_primary_edss_ge4_classifier.joblib
+14. Current regressor model exists,PASS,/content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/graphms_hybrid_stage13_final_v1/stage13_primary_edss_regressor.joblib
+15. Current classification lock exists,PASS,/content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/graphms_hybrid_stage13_final_v1/STAGE13_CLASSIFICATION_MODEL_LOCK.json
+16. Current regression lock exists,PASS,/content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/graphms_hybrid_stage13_final_v1/STAGE13_REGRESSION_MODEL_LOCK.json
+17. Current model locks bind to exact current Stage12 development SHA,PASS,b38886f43bb4b0e296c9716257478b9f93c8161dcdae1b34231b1894ada01eb4
+18. Guide Stage14 objective recorded,PASS,L=lambda1*L(Dice+BCE)+lambda2*L_CE
+19. Historical Stage14 status exact,PASS,IMPLEMENTED_EVALUATED_AUXILIARY_NOT_PROMOTED
+20. Historical multi-task not relabeled as current joint model,PASS,Multi-task learning is claimed as implemented/evaluated historical auxiliary research evidence. The current final GraphMS v3.5.1 Hybrid pipeline is NOT claimed to have been jointly retrained with the refreshed Stage13 risk models.
+21. No new Stage14 training,PASS,False
+22. No new Stage14 neural inference,PASS,False
+23. Linked task bundle contains segmentation,PASS,"{'model': 'GraphMS v3.5.1 Hybrid', 'stage11': 'cross-fitted Stage11-v1', 'development_equal_fold_dsc': 0.74804955387, 'claim_scope': 'development five-fold CV', 'protocol_sha': '8944f1a0deef8a7d0eb57118b4b45e3eed0bc803a2c0e93d63d9c9eaba6578a3', 'fusion_implementation_id': 'v3.5-concat-se-self-multiscale-dice-bce-adamw-cosine-250iter'}"
+24. Linked task bundle contains classification,PASS,MRI_SPATIAL_SVM
+25. Linked task bundle contains regression,PASS,MRI_SPATIAL_RIDGE
+26. Evidence ledger exists,PASS,/content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/graphms_hybrid_stage14_final_v1/STAGE14_EVIDENCE_LEDGER.csv
+27. Stage14 lock exists,PASS,/content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/graphms_hybrid_stage14_final_v1/STAGE14_FINAL_MULTITASK_LOCK.json
+28. Stage14 manifest COMPLETE,PASS,COMPLETE
