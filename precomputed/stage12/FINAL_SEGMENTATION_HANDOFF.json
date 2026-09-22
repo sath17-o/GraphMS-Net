@@ -1,0 +1,58 @@
+{
+  "claim_scope": "development five-fold CV",
+  "dice_tolerance": 5e-09,
+  "equal_fold_dsc": 0.748049553870348,
+  "equal_fold_dsc_expected": 0.74804955387,
+  "fold_counts": {
+    "0": 22,
+    "1": 18,
+    "2": 14,
+    "3": 23,
+    "4": 16
+  },
+  "fusion_implementation_id": "v3.5-concat-se-self-multiscale-dice-bce-adamw-cosine-250iter",
+  "ground_truth_usage": "GT read only for frozen segmentation verification; GT is not a Stage12 feature input",
+  "gt_files_read_for_verification": 93,
+  "hybrid_probability_root": "/content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/graphms_resencm250_true_hybrid_v3_5_1_8944f1a0de",
+  "inference": "original uniform-overlap Hybrid inference; stored probabilities only; no new neural inference",
+  "mask_geometry_source": "raw FLAIR NIfTI",
+  "model": "GraphMS v3.5.1 Hybrid",
+  "n_cases": 93,
+  "new_neural_inference_performed": false,
+  "new_training_performed": false,
+  "protocol_sha": "8944f1a0deef8a7d0eb57118b4b45e3eed0bc803a2c0e93d63d9c9eaba6578a3",
+  "stage11": "cross-fitted Stage11-v1",
+  "stage11_fold_recipes": {
+    "0": {
+      "connectivity": 26,
+      "minvox": 10,
+      "morphology": "none",
+      "threshold": 0.4
+    },
+    "1": {
+      "connectivity": 26,
+      "minvox": 10,
+      "morphology": "none",
+      "threshold": 0.4
+    },
+    "2": {
+      "connectivity": 26,
+      "minvox": 10,
+      "morphology": "none",
+      "threshold": 0.45
+    },
+    "3": {
+      "connectivity": 26,
+      "minvox": 10,
+      "morphology": "none",
+      "threshold": 0.4
+    },
+    "4": {
+      "connectivity": 26,
+      "minvox": 10,
+      "morphology": "none",
+      "threshold": 0.4
+    }
+  },
+  "status": "FROZEN"
+}
