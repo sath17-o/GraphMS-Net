@@ -1,0 +1,20 @@
+name: Verify frozen GraphMS package
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install verification dependencies
+        run: python -m pip install -r requirements-verify.txt
+      - name: Verify frozen manifests and audits
+        run: python scripts/run_pipeline.py --mode verify
+      - name: Replay Stage16 fold aggregation
+        run: python scripts/run_pipeline.py --mode evaluation-replay
