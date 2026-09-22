@@ -1,0 +1,37 @@
+gate,status,details
+1. Stage12 COMPLETE,PASS,COMPLETE
+2. Stage12 20/20 audit PASS,PASS,20 / 20
+3. Stage13 COMPLETE,PASS,COMPLETE
+4. Stage13 33/33 audit PASS,PASS,33 / 33
+5. Stage14 COMPLETE,PASS,COMPLETE
+6. Stage14 28/28 audit PASS,PASS,28 / 28
+7. Stage15 COMPLETE,PASS,COMPLETE
+8. Stage15 26/26 audit PASS,PASS,26 / 26
+9. Exactly five Stage16 diagram subtopics,PASS,"['Dice Similarity Coefficient / DSC', 'IoU / Jaccard', 'Sensitivity', 'Specificity', 'Hausdorff Distance / HD95']"
+10. DSC diagram item COMPLETE,PASS,0.748049553870 ± 0.031999993653
+11. IoU diagram item COMPLETE,PASS,0.610534701872 ± 0.036904187531
+12. Sensitivity diagram item COMPLETE,PASS,0.745722782031 ± 0.061037864849
+13. Specificity diagram item COMPLETE,PASS,0.999688903970 ± 0.000205231021
+14. HD95 diagram item COMPLETE,PASS,8.643581867636 ± 2.269264959846
+15. 93 unique frozen masks evaluated,PASS,93 rows / 93 unique cases
+16. Exact fold counts 22 / 18 / 14 / 23 / 16,PASS,"{0: 22, 1: 18, 2: 14, 3: 23, 4: 16}"
+17. Exactly five outer folds,PASS,"[0, 1, 2, 3, 4]"
+18. All metric values finite,PASS,per-case / per-fold / summary finite
+19. Every per-case DSC reproduces Stage12 ledger DSC,PASS,93 / 93 within 1e-12
+20. Frozen equal-fold DSC reproduced 0.748049553870,PASS,0.748049553870
+21. 5-fold sample SD used,PASS,np.std(ddof=1) across five fold means
+22. HD95 units = millimetres,PASS,physical voxel spacing; HD95_mm
+23. Final model exact = GraphMS v3.5.1 Hybrid,PASS,GraphMS v3.5.1 Hybrid
+24. Protocol SHA exact,PASS,8944f1a0deef8a7d0eb57118b4b45e3eed0bc803a2c0e93d63d9c9eaba6578a3
+25. Fusion implementation exact,PASS,v3.5-concat-se-self-multiscale-dice-bce-adamw-cosine-250iter
+26. No new training,PASS,False
+27. No new neural inference,PASS,False
+28. Historical test not evaluated,PASS,False
+29. No external/unseen-test claim,PASS,development five-fold CV
+30. Stage13 risk not added as sixth Stage16 diagram item,PASS,REFERENCE_ONLY_NOT_STAGE16_DIAGRAM_ITEM
+31. Per-case output exists,PASS,/content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/graphms_hybrid_stage16_final_v1/STAGE16_PER_CASE_METRICS.csv
+32. Per-fold output exists,PASS,/content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/graphms_hybrid_stage16_final_v1/STAGE16_PER_FOLD_METRICS.csv
+33. 5-fold summary output exists,PASS,/content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/graphms_hybrid_stage16_final_v1/STAGE16_5FOLD_MEAN_STD.csv
+34. Topic/subtopic output exists,PASS,/content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/graphms_hybrid_stage16_final_v1/STAGE16_TOPIC_SUBTOPIC_RESULT.csv
+35. Stage16 evaluation lock exists,PASS,FINAL_EVALUATION_LOCKED
+36. Stage16 manifest COMPLETE,PASS,COMPLETE
