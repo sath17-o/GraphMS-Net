@@ -69,7 +69,11 @@ Stages 14–16 are development/evaluation modules. They are retained as reproduc
 
 ## One-command patient run
 
-After the original frozen fold assets have been imported with `scripts/setup_assets.py` and the CUDA runtime has passed `scripts/check_neural_runtime.py`:
+After the CUDA runtime has passed `scripts/check_neural_runtime.py`, the
+evaluator supplies the three MRI volumes and runs one command. If the required
+fold is not already present, the runner downloads the frozen assets from the
+`assets-v1` GitHub Release and verifies their SHA-256 identities before
+starting inference:
 
 ```sh
 python run_graphms.py \
@@ -81,6 +85,9 @@ python run_graphms.py \
 ```
 
 For a known development case, its held-out fold is selected automatically and a conflicting fold is rejected. For a case outside the frozen 93-case registry, `--fold 0..4` must be supplied because no new-patient five-fold ensemble rule was validated.
+
+The original Drive workspace is an owner-side publication/recovery source, not
+an evaluator runtime dependency once the GitHub Release is published.
 
 ## Output bundle
 
