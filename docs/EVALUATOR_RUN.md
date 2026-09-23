@@ -1,25 +1,119 @@
-# Evaluator run guide
+# Run GraphMS-Net
 
-The repository is being packaged in two layers.
+The frozen result remains GraphMS v3.5.1 Hybrid, development five-fold CV,
+DSC 0.748049553870. No training or model selection occurs in these commands.
 
-## Available now
+## CPU verification
 
-### Verify frozen scientific evidence
-
-```bat
-RUN_VERIFY.bat
+```sh
+python -m pip install -r requirements-verify.txt
+python scripts/run_pipeline.py --mode verify
+python scripts/run_pipeline.py --mode evaluation-replay
 ```
 
-This checks the frozen Stage12-16 manifests and requires audits of 20/20, 33/33, 28/28, 26/26 and 36/36 PASS.
+The evaluation command aggregates the committed per-case table. It does not
+rerun MRI inference or recompute voxel metrics from masks.
 
-### Replay the final Stage16 metric aggregation
+## Full MRI research inference: original GPU environment
 
-```bat
-RUN_FULL_EVALUATION.bat
+Use a CUDA runtime (the original Colab/Kaggle runtime is appropriate). The
+Windows laptop can view the generated HTML/PNG/NIfTI/CSV outputs. CPU execution
+of the frozen mixed-precision neural path is not supported.
+
+Install CUDA-enabled PyTorch compatible with your GPU/driver, then install the
+remaining dependencies. The accepted training environment used PyTorch 2.8.0
+with CUDA 12.6; do not install torch 2.9.x.
+
+```sh
+python -m pip install -r requirements-inference.txt
+python scripts/check_neural_runtime.py
 ```
 
-This recomputes the five outer-fold means and sample standard deviations from the frozen 93-case per-case evaluation table and requires exact agreement with the Stage16 contract.
+In Colab, first mount the original Drive account:
 
-## Heavyweight patient inference
+```python
+from google.colab import drive
+drive.mount('/content/drive')
+```
 
-`RUN_GRAPHMS.bat` is intentionally fail-closed until the inference-only ResEncM-250, GAT and Hybrid/Fusion checkpoint bundle is published with SHA-256 values. The repository will not silently substitute a different model or claim a patient-inference path before those assets are frozen.
+Import the frozen artifacts from your existing project. This does not require
+public sharing, a release upload, feature-bank downloads, or retraining.
+For a single development case, import only its held-out fold to save disk/I/O.
+
+```sh
+python scripts/setup_assets.py \
+  --source-root /content/drive/MyDrive/MSLesSeg_MS \
+  --folds 0
+```
+
+The importer accepts `MSLesSeg_MS` or its `nnunet_v2` child and reads:
+
+- `nnUNet_results/Dataset001_MSLesSeg/nnUNetTrainer_250epochs__nnUNetResEncUNetMPlans__3d_fullres/`
+- `graphms_resencm250_true_hybrid_v3_5_1_8944f1a0de/outer_folds/outer_N/gat/refit/checkpoint_final.pth`
+- `graphms_resencm250_true_hybrid_v3_5_1_8944f1a0de/outer_folds/outer_N/fusion/refit/checkpoint_final.pth`
+
+It checks checkpoint identities, validates model tensors, verifies copies with
+SHA-256 and records `pretrained/assets.lock.json`. This is a local attestation
+of the explicitly selected originals, not a publisher-signed release. The
+runner rechecks those hashes before loading checkpoints. Only use trusted
+original checkpoints; their PyTorch serialization contains pickle objects.
+
+Run the known fold-0 development case without loading its ground truth:
+
+```sh
+python scripts/run_pipeline.py --mode patient \
+  --case-id MSLesSeg_P10_T1 \
+  --flair /content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/nnUNet_raw/Dataset001_MSLesSeg/imagesTr/MSLesSeg_P10_T1_0000.nii.gz \
+  --t1 /content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/nnUNet_raw/Dataset001_MSLesSeg/imagesTr/MSLesSeg_P10_T1_0001.nii.gz \
+  --t2 /content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/nnUNet_raw/Dataset001_MSLesSeg/imagesTr/MSLesSeg_P10_T1_0002.nii.gz \
+  --output outputs/MSLesSeg_P10_T1
+```
+
+The canonical Harvard-Oxford atlas is fetched through Nilearn if not cached.
+For an offline run, add `--atlas-cache PATH` pointing to the original Nilearn
+atlas cache. Atlas loading must succeed before Stage13 reporting. The
+canonical coordinate-compatibility and missing-value rules remain unchanged.
+
+Inputs must be scalar, finite, nonempty 3-D NIfTI volumes, co-registered with
+the same shape, spacing, origin and direction. The frozen nnU-Net plan performs
+its original preprocessing. No new BET/N4/ANTs preprocessing is inserted.
+
+For a case outside the 93-case development registry, explicitly pass `--fold N`.
+Such a run is labelled an unseen-case selected-fold research run. There is no
+automatic ensemble or new-patient validation claim. For a known development
+case, the runner selects its held-out fold and rejects a conflicting fold.
+Changing a case ID does not make a training patient unseen; preserve IDs.
+
+## Outputs
+
+A successful run creates the requested directory with:
+
+- `lesion_probability.nii.gz` and `lesion_mask.nii.gz`, in input FLAIR geometry
+- `features.csv` and `lesions.csv`, canonical Stage12 outputs
+- `risk.json`, predictions from the committed refreshed Stage13 SVM/Ridge
+- `overlay.png` and `patient_report.html`
+- `provenance.json` and `COMPLETE.json`, recording inputs, asset lock and output hashes
+
+An existing output directory is never overwritten. Failed runs remove their
+incomplete temporary output directory and do not write a completion record.
+
+## Acceptance still required
+
+The implementation has CPU contract/parity tests; it has not yet passed an
+end-to-end CUDA run with the original fold artifacts. Public asset publication
+is also outstanding. After running on the original GPU workspace, compare the
+93 development predictions with the saved Stage12 masks before declaring exact
+numerical replay. A source-parity test alone does not establish that result.
+
+The full one-case acceptance command imports the correct fold, executes the
+pipeline, then compares its mask against the saved frozen Stage12 mask:
+
+```sh
+python scripts/acceptance_replay.py \
+  --project-root /content/drive/MyDrive/MSLesSeg_MS \
+  --case-id MSLesSeg_P10_T1 \
+  --output outputs/acceptance_P10_T1
+```
+
+It writes `ACCEPTANCE.json` with PASS/FAIL and mismatch count. The reference
+mask is read only after the independent inference process has finished.

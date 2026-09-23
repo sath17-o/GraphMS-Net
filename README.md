@@ -73,11 +73,26 @@ ResEncM-250
 - `graphms/stage12/canonical_v2_1_source.py`: verbatim canonical Stage12 scientific engine source.
 - `graphms/stage13.py`: local wrapper around the committed refreshed Stage13 artifacts.
 
-## Remaining asset-publication boundary
+## Full MRI runner implemented; CUDA acceptance pending
 
-`RUN_GRAPHMS.bat` is deliberately **not yet advertised as complete**. Raw 3-D neural inference still requires the original large fold-specific ResEncM-250 assets (and, for exact development replay, the large Stage5/6 feature banks). Those artifacts are too large for normal Git history and must be published as hash-locked release assets or another durable public artifact bundle.
+The patient runner now executes the frozen CNN → graph → GAT → Hybrid →
+Stage11 → canonical Stage12 → Stage13 → local report path. It takes FLAIR/T1/T2,
+restores masks to FLAIR geometry, and records input/asset/output hashes.
 
-The repository fails closed instead of downloading an unverified substitute or inventing a new model.
+Import the original fold assets from your mounted project using
+`scripts/setup_assets.py --source-root PATH --folds N`, then follow
+[the run instructions](docs/EVALUATOR_RUN.md). No feature-bank download is
+required for a new inference run. The importer creates a local SHA-256 lock;
+no public release bundle is currently available.
+
+Known development cases use their held-out fold. Unseen cases require explicit
+fold selection and remain research runs. A fresh clone still needs the original
+neural weights and a CUDA runtime. End-to-end GPU acceptance and exact saved-mask
+comparison have **not yet been completed**.
+
+CPU tests check verbatim v6 primitives, exact GAT/Hybrid forward parity,
+asset tampering, fold protection, image geometry and canonical-feature-to-risk
+execution. These tests do not substitute for the pending GPU acceptance run.
 
 ## Scientific boundaries
 
