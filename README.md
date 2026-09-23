@@ -48,7 +48,11 @@ A successful run creates `lesion_probability.nii.gz`, `lesion_mask.nii.gz`, `fea
 
 ### Executed CUDA acceptance
 
-The packaged end-to-end path has now been executed on CUDA for development case `MSLesSeg_P10_T1` (held-out fold 0). It reproduced the frozen reference geometry and binary mask exactly: **PASS, 0 mismatched voxels**. The committed record is [evidence/acceptance/MSLesSeg_P10_T1_ACCEPTANCE.json](evidence/acceptance/MSLesSeg_P10_T1_ACCEPTANCE.json). Scope remains **one-case CUDA acceptance; not all-fold or external validation**.
+The packaged end-to-end path has been executed on CUDA for development case `MSLesSeg_P10_T1` (held-out fold 0). It reproduced the frozen reference geometry and binary mask exactly: **PASS, 0 mismatched voxels**. The committed record is [evidence/acceptance/MSLesSeg_P10_T1_ACCEPTANCE.json](evidence/acceptance/MSLesSeg_P10_T1_ACCEPTANCE.json).
+
+A second fresh-clone evaluator-path run then completed through the public `assets-v1` release **without the original Drive model workspace**. That packaging/runtime acceptance is recorded in [evidence/acceptance/NO_DRIVE_EVALUATOR_ACCEPTANCE.json](evidence/acceptance/NO_DRIVE_EVALUATOR_ACCEPTANCE.json).
+
+Scope remains **implementation/packaging acceptance plus development five-fold CV; not external validation**.
 
 **Graph-aware multimodal 3-D MRI lesion segmentation and EDSS-risk research pipeline**
 
