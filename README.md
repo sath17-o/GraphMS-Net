@@ -72,7 +72,7 @@ frozen Stage13 SVM/Ridge
 NIfTI + CSV + JSON + overlay + HTML report + provenance
 ```
 
-Detailed module-to-implementation correspondence is provided in [`PIPELINE_SHOWCASE.md`](PIPELINE_SHOWCASE.md).
+Detailed module-to-implementation correspondence is provided in [`ARCHITECTURE_AND_REPRODUCIBILITY.md`](ARCHITECTURE_AND_REPRODUCIBILITY.md).
 
 ## Patient-level inference
 
@@ -188,7 +188,7 @@ GraphMS-Net/
 ├── scripts/                  verification, replay, asset, and inference utilities
 ├── tests/                    frozen source-parity and inference-contract tests
 ├── run_graphms.py            patient-level inference entry point
-├── PIPELINE_SHOWCASE.md      module-to-implementation map
+├── ARCHITECTURE_AND_REPRODUCIBILITY.md  frozen architecture and implementation map
 └── docs/EVALUATOR_RUN.md     detailed execution protocol
 ```
 
@@ -208,7 +208,7 @@ GraphMS-Net is a research reproducibility package. The current repository should
 
 For implementation-level detail, see:
 
-- [`PIPELINE_SHOWCASE.md`](PIPELINE_SHOWCASE.md) — module-to-implementation correspondence and runtime architecture
+- [`ARCHITECTURE_AND_REPRODUCIBILITY.md`](ARCHITECTURE_AND_REPRODUCIBILITY.md) — module-to-implementation correspondence and runtime architecture
 - [`docs/EVALUATOR_RUN.md`](docs/EVALUATOR_RUN.md) — detailed execution protocol
 - [`ASSET_PUBLICATION.md`](ASSET_PUBLICATION.md) — frozen neural-asset publication and integrity workflow
 - [`config/asset_registry.json`](config/asset_registry.json) — frozen asset identities and publication state
