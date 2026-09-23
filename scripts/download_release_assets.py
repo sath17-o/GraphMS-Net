@@ -12,7 +12,10 @@ import json
 import shutil
 import tempfile
 import urllib.request
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 ROOT = Path(__file__).resolve().parents[1]
 OWNER_REPO = "sath17-o/GraphMS-Net"
