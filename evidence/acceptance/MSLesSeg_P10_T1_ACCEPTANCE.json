@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "case_id": "MSLesSeg_P10_T1",
+  "fold": 0,
+  "comparison": "exact binary mask equality plus geometry",
+  "geometry_matches": true,
+  "mask_matches": true,
+  "prediction_sha256": "b6312b4d684ba0a56046ddb33b15cbb8ace5592701a080bad73182451c0b5da7",
+  "reference_sha256": "7bf6dfbb7d9ee2bdae1b2f88b0d1bb0b77dc949002bbc47a93373f562fe2830f",
+  "mismatched_voxels": 0,
+  "scope": "one-case CUDA acceptance; not all-fold or external validation"
+}

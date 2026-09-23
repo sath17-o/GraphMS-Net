@@ -97,13 +97,18 @@ A successful run creates the requested directory with:
 An existing output directory is never overwritten. Failed runs remove their
 incomplete temporary output directory and do not write a completion record.
 
-## Acceptance still required
+## End-to-end CUDA acceptance
 
-The implementation has CPU contract/parity tests; it has not yet passed an
-end-to-end CUDA run with the original fold artifacts. Public asset publication
-is also outstanding. After running on the original GPU workspace, compare the
-93 development predictions with the saved Stage12 masks before declaring exact
-numerical replay. A source-parity test alone does not establish that result.
+The implementation has CPU contract/parity tests and has now passed a one-case
+end-to-end CUDA acceptance run with the original fold-0 artifacts for
+`MSLesSeg_P10_T1`. The independently generated final mask matched the frozen
+Stage12 reference geometry and binary mask exactly with **0 mismatched voxels**.
+The committed record is
+`evidence/acceptance/MSLesSeg_P10_T1_ACCEPTANCE.json`.
+
+This is one-case implementation/replay evidence. It is not an all-fold replay,
+external validation, or a new clinical-performance claim. Public neural-asset
+publication also remains separate from this acceptance result.
 
 The full one-case acceptance command imports the correct fold, executes the
 pipeline, then compares its mask against the saved frozen Stage12 mask:
