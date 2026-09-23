@@ -56,3 +56,8 @@ This makes segmentation failure modes directly inspectable while preserving the 
 ## Submission boundary
 
 Do not add BET/N4/ANTs only at inference and continue quoting the existing Stage16 metrics. Such a change would alter the input distribution of a model trained and evaluated under the frozen nnU-Net preprocessing lineage. A literal BET/N4/ANTs replacement would require a separately trained/evaluated experiment and is intentionally outside this rapid no-retraining audit.
+
+
+## Cohort-level diagnostic extension
+
+The no-retraining audit now also computes case-level DSC/HD95 distributions, fold-wise DSC, lesion-burden quartiles, the lowest-DSC table, FN/FP-dominant error direction, and an exportable diagnostics bundle. The frozen 93-case record shows a residual small-lesion sensitivity weakness; the detailed values and interpretation are recorded in `docs/SEGMENTATION_COHORT_DIAGNOSTICS.md`.
