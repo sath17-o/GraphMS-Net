@@ -57,3 +57,13 @@ The new diagnostic evidence strengthens the segmentation section without creatin
 The residual weakness is stated directly: **case performance is heterogeneous, and the lower-DSC tail is concentrated in lower lesion burden with predominantly missed-lesion error.**
 
 Notebook: `notebooks/GraphMS_Segmentation_Audit.ipynb`
+
+
+## Multi-case and boundary-focused visuals
+
+The audit now includes two additional reviewer-facing figures generated from the frozen OOF masks and original development MRI volumes, with no retraining or retuning:
+
+- **Multi-case qualitative panel:** six deterministic cases spanning best/median/worst performance and lesion-burden diversity.
+- **Boundary-focused panel:** four deterministic cases selected through HD95, including clean boundary agreement, a moderate-boundary example, a high-DSC / poor-boundary case, and the maximum-HD95 failure case.
+
+The boundary panel operationalizes the guide's request for "boundary cases" using the project's frozen boundary-distance metric rather than subjective visual selection. Ground truth is used only for retrospective visualization and case selection.
