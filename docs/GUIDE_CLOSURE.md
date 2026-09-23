@@ -44,3 +44,16 @@ The historical branch scoreboard uses **series/case-weighted mean DSC**. The fin
 ## Closure boundary
 
 All 16 prescribed stages are traceable. Remaining guide ideas that would require genuinely new experiments—new pretraining/transfer learning, new hard-negative or small-lesion-aware training, or new external validation—are outside the frozen submission and are not simulated, backfilled, or claimed as completed.
+
+
+## Extended Stage16 precision / lesion-F1 closure
+
+The frozen 93-case Stage16 masks were re-evaluated without retraining, new neural inference, threshold tuning, or model selection to add the remaining guide-requested detection metrics.
+
+| Metric | Equal-fold mean ± sample SD |
+|---|---:|
+| Segmentation precision (case-macro) | 0.777737 ± 0.039188 |
+| Lesion F1 — any overlap | 0.744368 ± 0.029950 |
+| Lesion F1 — IoU >= 0.10 | 0.730296 ± 0.033212 |
+
+Precision is computed per case and averaged within each outer fold. Lesion F1 uses 26-connected components and maximum bipartite one-to-one matching, with either any overlap or component-pair IoU >= 0.10. These are development five-fold descriptive metrics from the same frozen masks as the primary Stage16 result.
