@@ -9,6 +9,28 @@ GraphMS-Net packages the frozen **GraphMS v3.5.1 Hybrid** research system as a r
 
 The primary research claim remains **development five-fold cross-validation**. This repository does not present the reported performance as independent external validation or as evidence of clinical deployment readiness.
 
+
+## Research results at a glance
+
+| Research item | Frozen result |
+|---|---:|
+| Final segmentation system | **GraphMS v3.5.1 Hybrid** |
+| Development cohort | **93 MRI scans / 53 patients** |
+| Validation design | **5-fold development cross-validation** |
+| DSC | **0.748049553870 ± 0.031999993653** |
+| IoU / Jaccard | **0.610534701872 ± 0.036904187531** |
+| Sensitivity | **0.745722782031 ± 0.061037864849** |
+| Specificity | **0.999688903970 ± 0.000205231021** |
+| HD95 | **8.643581867636 ± 2.269264959846 mm** |
+| Stage13 fixed-OOF ROC-AUC | **0.747453703704** |
+| Stage13 fixed-OOF RMSE | **1.671117674945** |
+| Stage12–16 audits | **20/20, 33/33, 28/28, 26/26, 36/36 PASS** |
+| Exact CUDA mask replay | **PASS — 0 mismatched voxels** |
+| Public-release reproducibility execution | **PASS** |
+| Claim scope | **development five-fold CV; not external clinical validation** |
+
+The Colab notebook expands this summary into the complete Stage13 and Stage16 metric record, per-fold and per-case segmentation results, methodological/audit evidence, and a ground-truth-free patient-level reproducibility run.
+
 ## Reproducibility notebook
 
 The recommended entry point is the Colab reproducibility notebook:
