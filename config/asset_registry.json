@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
-  "status": "PUBLIC_RELEASE_PUBLISHED_NO_DRIVE_REPLAY_PENDING",
-  "note": "Frozen neural assets are published outside Git history through the public assets-v1 GitHub Release. The release downloader verifies size and SHA-256 before writing pretrained/assets.lock.json. A clean-clone no-Drive patient replay remains the final packaging acceptance.",
+  "status": "PUBLIC_RELEASE_NO_DRIVE_EVALUATOR_ACCEPTANCE_PASS",
+  "note": "Frozen neural assets are published through the public assets-v1 GitHub Release. A fresh-clone evaluator-path run completed successfully without the original Drive model workspace, using external MRI inputs and the repository's verified release bootstrap.",
   "release_distribution": {
     "tag": "assets-v1",
     "manifest": "graphms-assets-v1.json",
@@ -9,10 +9,12 @@
     "publisher": "scripts/publish_release_assets.py",
     "automatic_patient_bootstrap": true,
     "integrity": "size + SHA-256 + existing runtime asset verification",
-    "publication_status": "PUBLISHED",
+    "publication_status": "PUBLISHED_AND_EVALUATOR_REPLAY_PASS",
     "release_url": "https://github.com/sath17-o/GraphMS-Net/releases/tag/assets-v1",
     "release_asset_count": 18,
-    "manifest_tracked_file_count": 17
+    "manifest_tracked_file_count": 17,
+    "no_drive_evaluator_acceptance": "PASS",
+    "no_drive_evidence": "evidence/acceptance/NO_DRIVE_EVALUATOR_ACCEPTANCE.json"
   },
   "required_for_patient_inference": [
     {
