@@ -26,9 +26,9 @@ jobs:
           set -euo pipefail
           python -m pip install --quiet gdown
           mkdir -p assets
-          gdown --id "$CNN_ID" -O "assets/resencm250-fold${FOLD}-checkpoint_final.pth"
-          gdown --id "$GAT_ID" -O "assets/gat-fold${FOLD}-checkpoint_final.pth"
-          gdown --id "$FUSION_ID" -O "assets/fusion-fold${FOLD}-checkpoint_final.pth"
+          gdown "$CNN_ID" -O "assets/resencm250-fold${FOLD}-checkpoint_final.pth"
+          gdown "$GAT_ID" -O "assets/gat-fold${FOLD}-checkpoint_final.pth"
+          gdown "$FUSION_ID" -O "assets/fusion-fold${FOLD}-checkpoint_final.pth"
       - name: Check expected sizes and build manifest
         shell: bash
         run: |
