@@ -31,6 +31,13 @@ jobs:
               compile("".join(cell.get("source", [])), f"{p}:code_cell_{i}", "exec")
           print(f"EVALUATOR NOTEBOOK STATIC PASS: {len(code_cells)} code cells")
           PY
+      - name: Verify bundled zero-upload demo inputs
+        run: |
+          rm -rf /tmp/graphms-demo-inputs
+          python scripts/prepare_demo_inputs.py --output-dir /tmp/graphms-demo-inputs
+          test -s /tmp/graphms-demo-inputs/MSLesSeg_P10_T1_0000.nii.gz
+          test -s /tmp/graphms-demo-inputs/MSLesSeg_P10_T1_0001.nii.gz
+          test -s /tmp/graphms-demo-inputs/MSLesSeg_P10_T1_0002.nii.gz
       - name: Verify frozen manifests and audits
         run: python scripts/run_pipeline.py --mode verify
       - name: Replay Stage16 fold aggregation
