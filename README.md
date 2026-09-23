@@ -43,6 +43,14 @@ The default notebook execution is **zero-upload**. It reconstructs the attribute
 
 For an independent MRI case, set `USE_BUNDLED_DEMO = False` in the notebook and provide a co-registered FLAIR/T1/T2 NIfTI triplet. Cases outside the frozen development registry require an explicitly selected fold because no new-patient five-fold ensemble rule was validated.
 
+## Segmentation diagnostic audit
+
+For reviewer-facing inspection of the frozen segmentation behavior, use the dedicated no-retraining notebook:
+
+[**Open Segmentation Validation Audit in Google Colab**](https://colab.research.google.com/github/sath17-o/GraphMS-Net/blob/main/notebooks/GraphMS_Segmentation_Audit.ipynb)
+
+It deterministically renders best/median/worst OOF cases as **FLAIR | expert ground truth | frozen prediction | TP/FP/FN error map**, then computes DSC/HD95 distributions, fold-wise DSC, lesion-burden quartiles, worst-case error direction, and a compact diagnostics bundle. The frozen 93-case record shows a residual small-lesion sensitivity weakness; see [`docs/SEGMENTATION_COHORT_DIAGNOSTICS.md`](docs/SEGMENTATION_COHORT_DIAGNOSTICS.md). No model or Stage11 retuning is performed.
+
 ## Frozen scientific identity
 
 | Component | Frozen specification |
