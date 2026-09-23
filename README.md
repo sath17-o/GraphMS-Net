@@ -51,7 +51,7 @@ For reviewer-facing inspection of the frozen segmentation behavior, use the dedi
 
 It deterministically renders best/median/worst OOF cases as **FLAIR | expert ground truth | frozen prediction | TP/FP/FN error map**, adds a six-case qualitative diversity panel and an **HD95-driven boundary-focused panel**, then computes DSC/HD95 distributions, fold-wise DSC, lesion-burden quartiles, worst-case error direction, and a compact diagnostics bundle. The frozen 93-case record shows a residual low-lesion-burden / missed-lesion sensitivity weakness; see [`docs/SEGMENTATION_COHORT_DIAGNOSTICS.md`](docs/SEGMENTATION_COHORT_DIAGNOSTICS.md). No model or Stage11 retuning is performed.
 
-Final guide-alignment closure is summarized in [`docs/GUIDE_CLOSURE.md`](docs/GUIDE_CLOSURE.md), including the same-cohort CNN/CATMIL/GAT/Hybrid comparison, morphology disposition, and the 16-stage implementation/evidence matrix. This adds no retraining or scientific-result changes.
+Final guide-alignment closure is summarized in [`docs/GUIDE_CLOSURE.md`](docs/GUIDE_CLOSURE.md), including the same-cohort CNN/CATMIL/GAT/Hybrid comparison, morphology disposition, and the 16-stage implementation/evidence matrix. This adds no retraining or scientific-result changes. The final audit also adds the remaining no-training Stage16 precision and lesion-level F1 closure (any-overlap and IoU≥0.10 component matching) from the same frozen 93-case masks.
 
 ## Frozen scientific identity
 
