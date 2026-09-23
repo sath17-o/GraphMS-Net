@@ -1,5 +1,48 @@
 # GraphMS-Net
 
+**Complete guide-pipeline showcase: FLAIR + T1 + T2 in → segmentation + lesion analysis + EDSS/risk research outputs + report out**
+
+GraphMS-Net now exposes the frozen patient path as a single end-to-end application. For the complete module-by-module map, see [PIPELINE_SHOWCASE.md](PIPELINE_SHOWCASE.md).
+
+## One-command patient showcase
+
+After importing the original frozen fold assets and validating the CUDA runtime:
+
+```sh
+python run_graphms.py \
+  --case-id PATIENT_ID \
+  --flair /path/to/FLAIR.nii.gz \
+  --t1 /path/to/T1.nii.gz \
+  --t2 /path/to/T2.nii.gz \
+  --fold 0 \
+  --output outputs/PATIENT_ID
+```
+
+For a known development case, omit `--fold`: the held-out fold is selected automatically. For an unseen case, an explicit fold is required because no new-patient ensemble rule was validated.
+
+The single command executes the selected frozen path:
+
+```text
+FLAIR + T1 + T2
+ -> validation / frozen preprocessing
+ -> ResEncM-250 CNN
+ -> Stage5/6 graph construction
+ -> Stage7 TrueGAT
+ -> GraphMS v3.5.1 Hybrid (CNN+GNN + SE + self-attention + multi-scale fusion)
+ -> lesion probability/head
+ -> cross-fitted Stage11
+ -> final lesion mask
+ -> canonical Stage12 v2.1
+ -> Stage13 SVM/Ridge
+ -> NIfTI + CSV + JSON + overlay + HTML report + provenance
+```
+
+A successful run creates `lesion_probability.nii.gz`, `lesion_mask.nii.gz`, `features.csv`, `lesions.csv`, `risk.json`, `overlay.png`, `patient_report.html`, `provenance.json` and `COMPLETE.json`.
+
+### Executed CUDA acceptance
+
+The packaged end-to-end path has now been executed on CUDA for development case `MSLesSeg_P10_T1` (held-out fold 0). It reproduced the frozen reference geometry and binary mask exactly: **PASS, 0 mismatched voxels**. The committed record is [evidence/acceptance/MSLesSeg_P10_T1_ACCEPTANCE.json](evidence/acceptance/MSLesSeg_P10_T1_ACCEPTANCE.json). Scope remains **one-case CUDA acceptance; not all-fold or external validation**.
+
 **Graph-aware multimodal 3-D MRI lesion segmentation and EDSS-risk research pipeline**
 
 This repository packages the frozen **GraphMS v3.5.1 Hybrid** research system as an evaluator-facing reproducibility project. The scientific result is frozen; repository work does not retrain or re-select the model.
@@ -73,7 +116,7 @@ ResEncM-250
 - `graphms/stage12/canonical_v2_1_source.py`: verbatim canonical Stage12 scientific engine source.
 - `graphms/stage13.py`: local wrapper around the committed refreshed Stage13 artifacts.
 
-## Full MRI runner implemented; CUDA acceptance pending
+## Full MRI runner implemented; one-case CUDA acceptance passed
 
 The patient runner now executes the frozen CNN → graph → GAT → Hybrid →
 Stage11 → canonical Stage12 → Stage13 → local report path. It takes FLAIR/T1/T2,
@@ -87,12 +130,11 @@ no public release bundle is currently available.
 
 Known development cases use their held-out fold. Unseen cases require explicit
 fold selection and remain research runs. A fresh clone still needs the original
-neural weights and a CUDA runtime. End-to-end GPU acceptance and exact saved-mask
-comparison have **not yet been completed**.
+neural weights and a CUDA runtime. A one-case end-to-end CUDA acceptance and exact saved-mask comparison have **passed** for `MSLesSeg_P10_T1` (fold 0), with matching geometry and **0 mismatched voxels**. This is implementation/replay evidence only; it is not all-fold or external validation.
 
 CPU tests check verbatim v6 primitives, exact GAT/Hybrid forward parity,
 asset tampering, fold protection, image geometry and canonical-feature-to-risk
-execution. These tests do not substitute for the pending GPU acceptance run.
+execution. These tests complement, but do not replace, the committed one-case CUDA acceptance evidence.
 
 ## Scientific boundaries
 
