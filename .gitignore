@@ -7,3 +7,9 @@ outputs/
 assets/cache/
 assets/downloads/
 *.log
+outputs/
+*.partial
+pretrained/assets.lock.json
+pretrained/resencm250/fold_*/
+pretrained/gat/
+pretrained/fusion/

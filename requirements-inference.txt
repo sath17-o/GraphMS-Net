@@ -1,5 +1,7 @@
 # Frozen GraphMS inference environment.
 # CUDA-enabled PyTorch should be installed for raw 3-D neural inference.
+torch==2.8.0
+torchvision==0.23.0
 numpy==2.1.3
 pandas>=2.0,<3
 scipy==1.14.1
@@ -11,3 +13,7 @@ nnunetv2==2.8.1
 packaging>=24
 # PyTorch contract from the accepted GraphMS environment:
 # torch >= 2.1.2; torch 2.9.x excluded. Accepted CUDA engine used torch 2.8.0/cu126.
+
+scikit-image>=0.24,<0.26
+matplotlib>=3.8,<4
+nilearn>=0.10,<0.13

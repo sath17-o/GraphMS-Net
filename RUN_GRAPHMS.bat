@@ -1,11 +1,9 @@
 @echo off
 setlocal
-if not exist .venv (
-  py -3.11 -m venv .venv
+cd /d "%~dp0"
+if not exist .venv\Scripts\python.exe (
+  echo Set up the inference environment first. See docs\EVALUATOR_RUN.md
+  exit /b 1
 )
-call .venv\Scripts\activate.bat
-python -m pip install --upgrade pip
-python -m pip install -r requirements-inference.txt
-python scripts\setup_assets.py
-if errorlevel 1 exit /b 1
-python scripts\run_pipeline.py --mode patient %*
+.venv\Scripts\python.exe scripts\run_pipeline.py --mode patient %*
+exit /b %errorlevel%

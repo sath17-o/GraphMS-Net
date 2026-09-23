@@ -1,19 +1,20 @@
 # Runtime modes
 
-GraphMS has two scientifically different reproducibility problems and they are kept separate.
+| Mode | Inputs | What executes |
+| --- | --- | --- |
+| `verify` | Committed manifests and audits | Frozen identity and audit checks |
+| `evaluation-replay` | Committed per-case metrics | Verification and five-fold aggregation |
+| `patient` | Three aligned MRI volumes, explicit/registered fold, locally imported frozen assets, atlas cache | CNN preprocessing/inference → graph construction → GAT → Hybrid → Stage11 → canonical Stage12 → Stage13 → report |
 
-## 1. Frozen-result verification/evaluation
+Patient mode requires CUDA. It has no ground-truth argument and does not train,
+select epochs, tune thresholds, or build an unvalidated ensemble.
 
-`RUN_VERIFY.bat` and `RUN_FULL_EVALUATION.bat` run without neural retraining. They verify the Stage12-16 evidence and reproduce the final 93-case Stage16 aggregation.
+Frozen numerical behavior is preserved: CNN step size 0.5 with its original
+Gaussian/mirroring settings; FP16 encoder storage; FP32 GAT computation with
+FP16 context storage; 64-voxel Hybrid patches at stride 32 with uniform overlap
+averaging; native-space probability restoration; fold-specific Stage11.
+No Gaussian-overlap replacement is applied to the Hybrid windows.
 
-## 2. Neural pipeline execution
-
-The promoted neural chain is:
-
-ResEncM-250 -> Stage5/6 graph feature construction -> Stage7 GAT -> Stage8 CNN+GNN concat + SE + self-attention + multi-scale fusion -> Stage9 decoder -> Stage11 cross-fitted post-processing.
-
-The exact Stage7 and Stage8/9 geometries are packaged under `graphms/models/`.
-
-The original five ResEncM-250 checkpoints and Stage5/6 feature banks are large binary artifacts. They must not be silently replaced by newly trained or approximate models. Until the release bundle is published and hash-registered, `RUN_GRAPHMS.bat` intentionally fails closed.
-
-For a known development case, the correct outer-fold model and that fold's frozen Stage11 recipe must be used. The repository does not invent an unvalidated new-patient five-fold ensemble rule.
+Source parity and CPU functionality are tested. Full neural acceptance with
+original checkpoints is pending; `COMPLETE.json` only describes a successful
+individual execution and does not claim external or clinical validation.

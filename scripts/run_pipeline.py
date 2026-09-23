@@ -14,28 +14,29 @@ def evaluation_replay():
     verify()
     run([sys.executable, str(ROOT / "scripts" / "replay_stage16.py")])
 
-def patient():
-    registry=json.loads((ROOT/"config"/"asset_registry.json").read_text(encoding="utf-8"))
-    pending=[x for x in registry["required_for_patient_inference"] if x["status"].startswith("PENDING")]
-    if pending:
-        ids=", ".join(x["id"] for x in pending)
-        raise SystemExit(
-            "Patient inference assets are not published yet: "+ids+
-            ". Verification/evaluation replay is executable, but the heavyweight "
-            "neural inference bundle is still being packaged."
-        )
-    raise SystemExit("Patient runner wiring is not yet promoted.")
-
 def main():
     ap=argparse.ArgumentParser()
     ap.add_argument("--mode",choices=["verify","evaluation-replay","patient"],default="verify")
+    ap.add_argument('--flair', type=Path)
+    ap.add_argument('--t1', type=Path)
+    ap.add_argument('--t2', type=Path)
+    ap.add_argument('--case-id')
+    ap.add_argument('--fold', type=int, choices=range(5))
+    ap.add_argument('--asset-root', type=Path, default=ROOT/'pretrained')
+    ap.add_argument('--atlas-cache', type=Path, default=ROOT/'pretrained'/'atlas_cache')
+    ap.add_argument('--output', type=Path)
     args=ap.parse_args()
+    if args.mode=='patient':
+        missing=[x for x in ['flair','t1','t2','case_id','output'] if getattr(args,x) is None]
+        if missing: ap.error('Patient mode requires: '+', '.join('--'+x.replace('_','-') for x in missing))
     if args.mode=="verify":
         verify()
     elif args.mode=="evaluation-replay":
         evaluation_replay()
     else:
-        patient()
+        sys.path.insert(0,str(ROOT))
+        from graphms.patient import run_patient
+        run_patient(args,ROOT)
 
 if __name__=="__main__":
     main()
