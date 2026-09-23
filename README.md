@@ -6,7 +6,14 @@ GraphMS-Net now exposes the frozen patient path as a single end-to-end applicati
 
 ## One-command patient showcase
 
-After importing the original frozen fold assets and validating the CUDA runtime:
+The evaluator-facing runner is designed to bootstrap the required frozen neural
+fold automatically from the versioned GitHub Release when the weights are not
+already present locally. Every downloaded asset is size- and SHA-256-verified
+before inference. During release publication/testing, the original
+`scripts/setup_assets.py --source-root PATH` path remains available as the
+trusted fallback.
+
+After installing the inference environment and validating CUDA:
 
 ```sh
 python run_graphms.py \
@@ -122,15 +129,17 @@ The patient runner now executes the frozen CNN → graph → GAT → Hybrid →
 Stage11 → canonical Stage12 → Stage13 → local report path. It takes FLAIR/T1/T2,
 restores masks to FLAIR geometry, and records input/asset/output hashes.
 
-Import the original fold assets from your mounted project using
-`scripts/setup_assets.py --source-root PATH --folds N`, then follow
-[the run instructions](docs/EVALUATOR_RUN.md). No feature-bank download is
-required for a new inference run. The importer creates a local SHA-256 lock;
-no public release bundle is currently available.
+The final distribution path uses the `assets-v1` GitHub Release. On first
+patient execution, `run_graphms.py` resolves the required fold, downloads
+only that fold's frozen CNN/GAT/Hybrid assets plus nnU-Net metadata, verifies
+them against `graphms-assets-v1.json`, and creates `pretrained/assets.lock.json`.
+The original Drive importer remains available for owner-side recovery and
+publication. See [ASSET_PUBLICATION.md](ASSET_PUBLICATION.md).
 
 Known development cases use their held-out fold. Unseen cases require explicit
-fold selection and remain research runs. A fresh clone still needs the original
-neural weights and a CUDA runtime. A one-case end-to-end CUDA acceptance and exact saved-mask comparison have **passed** for `MSLesSeg_P10_T1` (fold 0), with matching geometry and **0 mismatched voxels**. This is implementation/replay evidence only; it is not all-fold or external validation.
+fold selection and remain research runs. A fresh clone needs a CUDA runtime;
+once the `assets-v1` release is published, the required neural weights are
+retrieved automatically rather than requiring access to the original Drive. A one-case end-to-end CUDA acceptance and exact saved-mask comparison have **passed** for `MSLesSeg_P10_T1` (fold 0), with matching geometry and **0 mismatched voxels**. This is implementation/replay evidence only; it is not all-fold or external validation.
 
 CPU tests check verbatim v6 primitives, exact GAT/Hybrid forward parity,
 asset tampering, fold protection, image geometry and canonical-feature-to-risk
