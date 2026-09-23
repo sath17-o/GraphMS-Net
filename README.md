@@ -12,9 +12,11 @@ For the simplest guide/evaluator workflow, open the complete Colab runner:
 
 Notebook source: [`notebooks/GraphMS_Evaluator_Colab.ipynb`](notebooks/GraphMS_Evaluator_Colab.ipynb)
 
-The notebook performs the evaluator workflow in order: GPU check → fresh clone of `main` → pinned environment install → frozen repository verification → Stage16 aggregate replay → MRI upload → fold resolution → GitHub Release asset download + SHA-256 verification → complete GraphMS patient inference → output inspection → overlay/report display → provenance checks → downloadable result ZIP.
+The default notebook path is **zero-upload**: it uses the attributed bundled `MSLesSeg_P10_T1` FLAIR/T1/T2 demo triplet, verifies those inputs by SHA-256, downloads and verifies the frozen fold assets, runs the complete pipeline, displays the outputs/report, checks provenance, and produces a downloadable result ZIP. An evaluator can therefore open Colab, enable a GPU and use **Run all** without selecting MRI files.
 
-The evaluator only supplies the co-registered **FLAIR, T1 and T2** NIfTI inputs. The original GraphMS research Drive is not required for the neural model assets.
+To evaluate another patient, set `USE_BUNDLED_DEMO = False` in the notebook and supply that patient's co-registered **FLAIR, T1 and T2** NIfTI inputs. The original GraphMS research Drive is not required for the neural model assets.
+
+The bundled demonstration inputs are attributed in [`demo_inputs/README.md`](demo_inputs/README.md) to Ali M. Muslim's Mendeley Data MS MRI dataset (DOI `10.17632/8bctsm8jz7.1`), published under CC BY 4.0. No ground-truth lesion mask, EDSS record, or patient metadata is bundled.
 
 ## One-command patient showcase
 
