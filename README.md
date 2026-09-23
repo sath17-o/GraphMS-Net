@@ -1,35 +1,84 @@
 # GraphMS-Net
 
-**Complete guide-pipeline showcase: FLAIR + T1 + T2 in → segmentation + lesion analysis + EDSS/risk research outputs + report out**
+**Graph-aware multimodal 3-D MRI research pipeline for multiple-sclerosis lesion segmentation, lesion characterization, and downstream MRI-derived EDSS/risk modeling**
 
-GraphMS-Net now exposes the frozen patient path as a single end-to-end application. For the complete module-by-module map, see [PIPELINE_SHOWCASE.md](PIPELINE_SHOWCASE.md).
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/sath17-o/GraphMS-Net/blob/main/notebooks/GraphMS_Evaluator_Colab.ipynb)
+[![Verify frozen GraphMS package](https://github.com/sath17-o/GraphMS-Net/actions/workflows/verify.yml/badge.svg)](https://github.com/sath17-o/GraphMS-Net/actions/workflows/verify.yml)
 
-## One-click evaluator notebook
+GraphMS-Net packages the frozen **GraphMS v3.5.1 Hybrid** research system as a reproducible inference and evaluation repository. The repository preserves the selected scientific pipeline, its associated implementation identities, downstream models, evaluation artifacts, and provenance checks. Repository packaging does **not** retrain, re-select, or modify the frozen scientific result.
 
-For the simplest guide/evaluator workflow, open the complete Colab runner:
+The primary research claim remains **development five-fold cross-validation**. This repository does not present the reported performance as independent external validation or as evidence of clinical deployment readiness.
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/sath17-o/GraphMS-Net/blob/main/notebooks/GraphMS_Evaluator_Colab.ipynb)
+## Reproducibility notebook
+
+The recommended entry point is the Colab reproducibility notebook:
+
+[**Open GraphMS-Net Reproducibility Notebook in Google Colab**](https://colab.research.google.com/github/sath17-o/GraphMS-Net/blob/main/notebooks/GraphMS_Evaluator_Colab.ipynb)
 
 Notebook source: [`notebooks/GraphMS_Evaluator_Colab.ipynb`](notebooks/GraphMS_Evaluator_Colab.ipynb)
 
-The default notebook path is **zero-upload**: it uses the attributed bundled `MSLesSeg_P10_T1` FLAIR/T1/T2 demo triplet, verifies those inputs by SHA-256, downloads and verifies the frozen fold assets, runs the complete pipeline, displays the outputs/report, checks provenance, and produces a downloadable result ZIP. An evaluator can therefore open Colab, enable a GPU and use **Run all** without selecting MRI files.
+The default notebook execution is **zero-upload**. It reconstructs the attributed `MSLesSeg_P10_T1` FLAIR/T1/T2 demonstration triplet bundled with the repository, verifies the three inputs by SHA-256, verifies the frozen research package, replays the committed Stage16 aggregate evaluation, resolves the appropriate development fold, downloads and verifies the corresponding frozen neural assets from the public `assets-v1` GitHub Release, executes the complete patient-level pipeline, displays the segmentation and downstream outputs, verifies provenance, and packages the generated results.
 
-To evaluate another patient, set `USE_BUNDLED_DEMO = False` in the notebook and supply that patient's co-registered **FLAIR, T1 and T2** NIfTI inputs. The original GraphMS research Drive is not required for the neural model assets.
+For an independent MRI case, set `USE_BUNDLED_DEMO = False` in the notebook and provide a co-registered FLAIR/T1/T2 NIfTI triplet. Cases outside the frozen development registry require an explicitly selected fold because no new-patient five-fold ensemble rule was validated.
 
-The bundled demonstration inputs are attributed in [`demo_inputs/README.md`](demo_inputs/README.md) to Ali M. Muslim's Mendeley Data MS MRI dataset (DOI `10.17632/8bctsm8jz7.1`), published under CC BY 4.0. No ground-truth lesion mask, EDSS record, or patient metadata is bundled.
+## Frozen scientific identity
 
-## One-command patient showcase
+| Component | Frozen specification |
+|---|---|
+| Final segmentation system | **GraphMS v3.5.1 Hybrid** |
+| Protocol SHA | `8944f1a0deef8a7d0eb57118b4b45e3eed0bc803a2c0e93d63d9c9eaba6578a3` |
+| Stage5/6 runtime implementation | `v6-stage56-hardened-provenance-reuse-validate-20260919` |
+| Stage7 implementation | `v3.4.1-gat-fp32-dice-bce-adamw-cosine-baseline-preserving-selection` |
+| Hybrid fusion implementation | `v3.5-concat-se-self-multiscale-dice-bce-adamw-cosine-250iter` |
+| Final Stage11 | cross-fitted Stage11-v1; 26-connectivity; no morphology |
+| Stage13 classifier | MRI_SPATIAL_SVM, C=30, `mri_spatial` |
+| Stage13 regressor | MRI_SPATIAL_RIDGE, alpha=30, `mri_spatial` |
+| Stage14 status | `IMPLEMENTED_EVALUATED_AUXILIARY_NOT_PROMOTED` |
+| Scientific claim scope | development five-fold cross-validation |
 
-The evaluator-facing runner is designed to bootstrap the required frozen neural
-fold automatically from the versioned GitHub Release when the weights are not
-already present locally. Every downloaded asset is size- and SHA-256-verified
-before inference. The `assets-v1` release is published. The original
-`scripts/setup_assets.py --source-root PATH` path remains available as the
-trusted fallback.
+## Frozen inference architecture
 
-After installing the inference environment and validating CUDA:
+The patient-level runtime executes the selected frozen path:
 
-```sh
+```text
+FLAIR + T1 + T2
+    ↓
+input and geometry validation
+    ↓
+frozen nnU-Net preprocessing
+    ↓
+ResEncM-250 CNN
+    ↓
+Stage5/6 graph-feature construction
+    ↓
+Stage7 TrueGAT
+    ↓
+CNN + GNN concatenation
+    ↓
+SE + self-attention + multi-scale hybrid fusion
+    ↓
+transposed-convolution decoder + CNN-logit skip
+    ↓
+1×1×1 lesion head
+    ↓
+cross-fitted Stage11-v1
+    ↓
+final lesion mask in input FLAIR geometry
+    ↓
+canonical Stage12 v2.1 lesion/MRI-spatial features
+    ↓
+frozen Stage13 SVM/Ridge
+    ↓
+NIfTI + CSV + JSON + overlay + HTML report + provenance
+```
+
+Detailed module-to-implementation correspondence is provided in [`PIPELINE_SHOWCASE.md`](PIPELINE_SHOWCASE.md).
+
+## Patient-level inference
+
+After installing the inference environment and confirming a CUDA-capable runtime:
+
+```bash
 python run_graphms.py \
   --case-id PATIENT_ID \
   --flair /path/to/FLAIR.nii.gz \
@@ -39,133 +88,127 @@ python run_graphms.py \
   --output outputs/PATIENT_ID
 ```
 
-For a known development case, omit `--fold`: the held-out fold is selected automatically. For an unseen case, an explicit fold is required because no new-patient ensemble rule was validated.
+For a known development case, omit `--fold`; the held-out fold is resolved from the frozen registry. For a case outside that registry, an explicit fold `0..4` is required. Such a run is labeled as a selected-fold research run and does not constitute external validation.
 
-The single command executes the selected frozen path:
+On first use, `run_graphms.py` automatically retrieves the required frozen ResEncM-250, GAT, and Hybrid checkpoints together with the nnU-Net metadata from the public `assets-v1` release. Asset size and SHA-256 identity are verified before the files are admitted into `pretrained/assets.lock.json`.
+
+A successful execution generates:
+
+| Output | Description |
+|---|---|
+| `lesion_probability.nii.gz` | voxelwise lesion probability volume |
+| `lesion_mask.nii.gz` | final binary lesion segmentation in input FLAIR geometry |
+| `features.csv` | canonical Stage12 feature table |
+| `lesions.csv` | lesion-component measurements |
+| `risk.json` | frozen Stage13 research outputs |
+| `overlay.png` | segmentation visualization |
+| `patient_report.html` | consolidated patient-level research report |
+| `provenance.json` | input, asset, execution, and output provenance |
+| `COMPLETE.json` | explicit successful-run completion record |
+
+## Development evaluation result
+
+The frozen Stage16 five-fold aggregate is:
+
+| Metric | Mean ± SD |
+|---|---:|
+| DSC | **0.748049553870 ± 0.031999993653** |
+| IoU | **0.610534701872 ± 0.036904187531** |
+| Sensitivity | **0.745722782031 ± 0.061037864849** |
+| Specificity | **0.999688903970 ± 0.000205231021** |
+| HD95 | **8.643581867636 ± 2.269264959846 mm** |
+
+These values are reproduced from the frozen **93-case development five-fold evaluation table**. They are not presented as independent external-test performance.
+
+The aggregate can be replayed locally with:
+
+```bash
+python scripts/run_pipeline.py --mode evaluation-replay
+```
+
+## Reproducibility and acceptance evidence
+
+The repository includes several distinct forms of implementation evidence.
+
+| Evidence | Status | Scope |
+|---|---|---|
+| Frozen manifests and Stage12-16 audits | PASS | repository/package integrity |
+| CPU source-parity and inference-contract tests | PASS | implementation contracts and frozen primitive parity |
+| Stage13 local inference smoke test | PASS | committed SVM/Ridge runtime |
+| `MSLesSeg_P10_T1` CUDA end-to-end replay | PASS | one development case, held-out fold 0 |
+| Exact final-mask comparison for `MSLesSeg_P10_T1` | PASS | matching geometry; 0 mismatched voxels |
+| Fresh-clone public-release execution without original model Drive | PASS | packaging/runtime reproducibility |
+
+Committed acceptance records:
+
+- [`evidence/acceptance/MSLesSeg_P10_T1_ACCEPTANCE.json`](evidence/acceptance/MSLesSeg_P10_T1_ACCEPTANCE.json)
+- [`evidence/acceptance/NO_DRIVE_EVALUATOR_ACCEPTANCE.json`](evidence/acceptance/NO_DRIVE_EVALUATOR_ACCEPTANCE.json)
+
+These records demonstrate implementation and packaging reproducibility. They do not extend the scientific claim beyond development five-fold cross-validation.
+
+## Local verification
+
+Repository-level verification:
+
+```bash
+python -m pip install -r requirements-verify.txt
+python scripts/run_pipeline.py --mode verify
+```
+
+CUDA inference-runtime verification:
+
+```bash
+python -m pip install -r requirements-inference.txt
+python scripts/check_neural_runtime.py
+```
+
+The accepted neural environment used PyTorch 2.8.0 with CUDA 12.6 and `nnunetv2==2.8.1`. The full mixed-precision 3-D neural path requires CUDA; package verification and Stage16 aggregate replay remain CPU-capable.
+
+## Demonstration MRI data
+
+The zero-upload Colab workflow uses only the three MRI volumes required for the `MSLesSeg_P10_T1` reproducibility demonstration. No ground-truth lesion mask, EDSS record, or additional patient metadata is bundled.
+
+Source:
+
+Ali M. Muslim, *Brain MRI Dataset of Multiple Sclerosis with Consensus Manual Lesion Segmentation and Patient Meta Information*, Mendeley Data, Version 1 (2022), DOI: `10.17632/8bctsm8jz7.1`.
+
+The source dataset is distributed under **CC BY 4.0**. Attribution and reconstruction details are documented in [`demo_inputs/README.md`](demo_inputs/README.md). The demonstration files are verified by SHA-256 before use.
+
+## Repository structure
 
 ```text
-FLAIR + T1 + T2
- -> validation / frozen preprocessing
- -> ResEncM-250 CNN
- -> Stage5/6 graph construction
- -> Stage7 TrueGAT
- -> GraphMS v3.5.1 Hybrid (CNN+GNN + SE + self-attention + multi-scale fusion)
- -> lesion probability/head
- -> cross-fitted Stage11
- -> final lesion mask
- -> canonical Stage12 v2.1
- -> Stage13 SVM/Ridge
- -> NIfTI + CSV + JSON + overlay + HTML report + provenance
+GraphMS-Net/
+├── graphms/                  frozen runtime implementation
+├── config/                   protocol and asset registries
+├── results/                  frozen Stage12-16 research artifacts
+├── evidence/acceptance/      committed reproducibility evidence
+├── pretrained/               local verified asset layout
+├── demo_inputs/              attributed reproducibility MRI triplet
+├── notebooks/                Colab reproducibility notebook
+├── scripts/                  verification, replay, asset, and inference utilities
+├── tests/                    frozen source-parity and inference-contract tests
+├── run_graphms.py            patient-level inference entry point
+├── PIPELINE_SHOWCASE.md      module-to-implementation map
+└── docs/EVALUATOR_RUN.md     detailed execution protocol
 ```
 
-A successful run creates `lesion_probability.nii.gz`, `lesion_mask.nii.gz`, `features.csv`, `lesions.csv`, `risk.json`, `overlay.png`, `patient_report.html`, `provenance.json` and `COMPLETE.json`.
+## Scope and limitations
 
-### Executed CUDA acceptance
+GraphMS-Net is a research reproducibility package. The current repository should be interpreted under the following constraints:
 
-The packaged end-to-end path has been executed on CUDA for development case `MSLesSeg_P10_T1` (held-out fold 0). It reproduced the frozen reference geometry and binary mask exactly: **PASS, 0 mismatched voxels**. The committed record is [evidence/acceptance/MSLesSeg_P10_T1_ACCEPTANCE.json](evidence/acceptance/MSLesSeg_P10_T1_ACCEPTANCE.json).
+1. Reported segmentation performance is based on **development five-fold cross-validation**, not untouched external validation.
+2. The one-case CUDA acceptance is an implementation/replay check; it is not an all-fold validation study.
+3. The Stage14 true multi-task branch was implemented and evaluated but was **not promoted** into the final segmentation system.
+4. Stage13 uses frozen classical SVM/Ridge models; neural training settings do not describe those downstream estimators.
+5. No unvalidated five-fold ensemble rule is introduced for a new patient. External cases require an explicitly selected fold and remain research runs.
+6. No additional BET/N4/ANTs preprocessing is inserted into patient inference; the runtime uses the frozen nnU-Net preprocessing plan.
+7. The repository and generated outputs are intended for research and reproducibility, not clinical diagnosis or treatment decision-making.
 
-A second fresh-clone evaluator-path run then completed through the public `assets-v1` release **without the original Drive model workspace**. That packaging/runtime acceptance is recorded in [evidence/acceptance/NO_DRIVE_EVALUATOR_ACCEPTANCE.json](evidence/acceptance/NO_DRIVE_EVALUATOR_ACCEPTANCE.json).
+## Documentation
 
-Scope remains **implementation/packaging acceptance plus development five-fold CV; not external validation**.
+For implementation-level detail, see:
 
-**Graph-aware multimodal 3-D MRI lesion segmentation and EDSS-risk research pipeline**
-
-This repository packages the frozen **GraphMS v3.5.1 Hybrid** research system as an evaluator-facing reproducibility project. The scientific result is frozen; repository work does not retrain or re-select the model.
-
-## Frozen scientific identity
-
-- Final segmentation system: **GraphMS v3.5.1 Hybrid**
-- Protocol SHA: `8944f1a0deef8a7d0eb57118b4b45e3eed0bc803a2c0e93d63d9c9eaba6578a3`
-- Fusion implementation: `v3.5-concat-se-self-multiscale-dice-bce-adamw-cosine-250iter`
-- Final Stage11: **cross-fitted Stage11-v1**, 26-connectivity, no morphology
-- Development five-fold equal-fold DSC: **0.748049553870**
-- Claim scope: **development five-fold CV**
-- Stage13 classifier: **MRI_SPATIAL_SVM, C=30, mri_spatial**
-- Stage13 regressor: **MRI_SPATIAL_RIDGE, alpha=30, mri_spatial**
-
-## What works from a normal clone now
-
-### 1. Frozen package verification
-
-```bat
-RUN_VERIFY.bat
-```
-
-Requires Stage12-16 audits of **20/20, 33/33, 28/28, 26/26 and 36/36 PASS** and verifies the frozen model/protocol identities.
-
-### 2. Final Stage16 evaluation replay
-
-```bat
-RUN_FULL_EVALUATION.bat
-```
-
-Recomputes the five-fold aggregation from the frozen 93-case per-case evaluation table and requires exact agreement with:
-
-- DSC: `0.748049553870 +/- 0.031999993653`
-- IoU: `0.610534701872 +/- 0.036904187531`
-- Sensitivity: `0.745722782031 +/- 0.061037864849`
-- Specificity: `0.999688903970 +/- 0.000205231021`
-- HD95: `8.643581867636 +/- 2.269264959846 mm`
-
-### 3. Frozen Stage13 local inference smoke
-
-```bat
-RUN_STAGE13_SMOKE.bat
-```
-
-Loads the actual committed refreshed SVM/Ridge joblib artifacts and executes a local prediction against the frozen Stage12->13 development handoff.
-
-## Neural source now packaged
-
-The repository contains the frozen downstream implementation geometry:
-
-```text
-ResEncM-250
-  -> Stage5/6 graph features
-  -> Stage7 TrueGAT
-  -> CNN+GNN concat
-  -> SE
-  -> self-attention
-  -> multi-scale fusion
-  -> transposed-convolution decoder
-  -> CNN-logit skip
-  -> 1x1x1 lesion head
-  -> cross-fitted Stage11
-  -> canonical Stage12 v2.1
-  -> frozen Stage13 SVM/Ridge
-```
-
-- `graphms/models/gat.py`: audited Stage7 sparse edge-GAT geometry.
-- `graphms/models/hybrid.py`: promoted SE + self-attention + multi-scale Stage8/9 geometry.
-- `graphms/postprocessing.py`: exact cross-fitted Stage11-v1 recipes.
-- `graphms/stage12/canonical_v2_1_source.py`: verbatim canonical Stage12 scientific engine source.
-- `graphms/stage13.py`: local wrapper around the committed refreshed Stage13 artifacts.
-
-## Full MRI runner implemented; one-case CUDA acceptance passed
-
-The patient runner now executes the frozen CNN → graph → GAT → Hybrid →
-Stage11 → canonical Stage12 → Stage13 → local report path. It takes FLAIR/T1/T2,
-restores masks to FLAIR geometry, and records input/asset/output hashes.
-
-The final distribution path uses the `assets-v1` GitHub Release. On first
-patient execution, `run_graphms.py` resolves the required fold, downloads
-only that fold's frozen CNN/GAT/Hybrid assets plus nnU-Net metadata, verifies
-them against `graphms-assets-v1.json`, and creates `pretrained/assets.lock.json`.
-The original Drive importer remains available for owner-side recovery and
-publication. See [ASSET_PUBLICATION.md](ASSET_PUBLICATION.md).
-
-Known development cases use their held-out fold. Unseen cases require explicit
-fold selection and remain research runs. A fresh clone needs a CUDA runtime;
-the required neural weights are retrieved automatically from the published `assets-v1` release rather than requiring access to the original Drive. A one-case end-to-end CUDA acceptance and exact saved-mask comparison have **passed** for `MSLesSeg_P10_T1` (fold 0), with matching geometry and **0 mismatched voxels**. This is implementation/replay evidence only; it is not all-fold or external validation.
-
-CPU tests check verbatim v6 primitives, exact GAT/Hybrid forward parity,
-asset tampering, fold protection, image geometry and canonical-feature-to-risk
-execution. These tests complement, but do not replace, the committed one-case CUDA acceptance evidence.
-
-## Scientific boundaries
-
-- The segmentation result is **development five-fold CV**, not untouched external validation.
-- Historical true multi-task learning is **IMPLEMENTED_EVALUATED_AUXILIARY_NOT_PROMOTED**; the final segmentation and Stage13 risk outputs are linked but decoupled.
-- Stage13 is classical SVM/Ridge inference; neural AdamW/cosine settings do not describe the classical models.
-- No Gaussian-overlap replacement, GAT-Hybrid blend, TTA or dense-stride rescue is promoted.
-- The repository does not invent an unvalidated five-fold ensemble rule for a new patient.
+- [`PIPELINE_SHOWCASE.md`](PIPELINE_SHOWCASE.md) — module-to-implementation correspondence and runtime architecture
+- [`docs/EVALUATOR_RUN.md`](docs/EVALUATOR_RUN.md) — detailed execution protocol
+- [`ASSET_PUBLICATION.md`](ASSET_PUBLICATION.md) — frozen neural-asset publication and integrity workflow
+- [`config/asset_registry.json`](config/asset_registry.json) — frozen asset identities and publication state
