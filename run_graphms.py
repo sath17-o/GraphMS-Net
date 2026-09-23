@@ -1,6 +1,6 @@
-"""One-command GraphMS-Net patient showcase.
+"""GraphMS-Net patient-level frozen inference entry point.
 
-This is a presentation-friendly entry point over the frozen patient runner.
+This command exposes the frozen patient runner through a reproducible research interface.
 It does not change scientific/model logic.
 """
 from __future__ import annotations

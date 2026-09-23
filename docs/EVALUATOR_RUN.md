@@ -33,7 +33,7 @@ python scripts/check_neural_runtime.py
 
 The evaluator does **not** need the original research Drive for neural model
 assets. The public `assets-v1` GitHub Release is published and the fresh-clone
-no-original-Drive evaluator path has passed. `run_graphms.py` first resolves the
+fresh-clone execution without the original Drive model workspace has passed. `run_graphms.py` first resolves the
 held-out/selected fold, verifies any local assets, and if necessary downloads
 only the required CNN/GAT/Hybrid fold plus the nnU-Net plan/dataset metadata.
 The download is accepted only after size and SHA-256 checks against the release

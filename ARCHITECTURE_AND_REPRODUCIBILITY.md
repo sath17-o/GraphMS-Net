@@ -1,8 +1,8 @@
-# GraphMS-Net — Complete Guide Pipeline Showcase
+# GraphMS-Net — Frozen Pipeline Architecture and Reproducibility Map
 
-This document is the evaluator-facing map from the guide pipeline to the frozen implementation. The repository is designed so a user supplies one co-registered patient triplet — **FLAIR, T1 and T2** — and the selected frozen GraphMS pipeline produces the segmentation, lesion analysis, EDSS/risk research outputs, visualization, report and provenance in one run.
+This document maps the frozen GraphMS research pipeline to its repository implementation and committed evidence. A co-registered **FLAIR, T1 and T2** MRI triplet is propagated through the selected frozen inference path to generate lesion segmentation, lesion-level characterization, downstream MRI-derived EDSS/risk research outputs, visualization, reporting, and provenance.
 
-## One input → one complete output bundle
+## End-to-end frozen inference path
 
 ```text
 FLAIR.nii.gz + T1.nii.gz + T2.nii.gz
@@ -45,7 +45,7 @@ Stage13 MRI_SPATIAL_SVM + MRI_SPATIAL_RIDGE
 overlay.png + CSV + JSON + NIfTI + patient_report.html + provenance
 ```
 
-## Guide-module implementation map
+## Module-to-implementation correspondence
 
 | Pipeline module | Frozen implementation / evidence | Runtime role |
 |---|---|---|
@@ -67,10 +67,10 @@ overlay.png + CSV + JSON + NIfTI + patient_report.html + provenance
 
 Stages 14–16 are development/evaluation modules. They are retained as reproducible evidence but are **not rerun for every patient**. A patient run uses the frozen system selected by that research pipeline.
 
-## One-command patient run
+## Patient-level inference entry point
 
 After the CUDA runtime has passed `scripts/check_neural_runtime.py`, the
-evaluator supplies the three MRI volumes and runs one command. If the required
+research user supplies the three MRI volumes and executes the frozen inference entry point. If the required
 fold is not already present, the runner downloads the frozen assets from the
 `assets-v1` GitHub Release and verifies their SHA-256 identities before
 starting inference:
@@ -87,11 +87,11 @@ python run_graphms.py \
 For a known development case, its held-out fold is selected automatically and a conflicting fold is rejected. For a case outside the frozen 93-case registry, `--fold 0..4` must be supplied because no new-patient five-fold ensemble rule was validated.
 
 The original Drive workspace is an owner-side publication/recovery source, not
-an evaluator runtime dependency. The public `assets-v1` release has been
-published and a fresh-clone no-original-Drive evaluator-path run completed
+a runtime dependency for reproducibility execution. The public `assets-v1` release has been
+published and a fresh-clone execution without the original Drive model workspace completed
 successfully.
 
-## Output bundle
+## Generated research outputs
 
 A successful run creates:
 
@@ -110,7 +110,7 @@ outputs/<case-id>/
 
 The output directory is written atomically. Failed runs do not leave a false completion record.
 
-## Executed end-to-end acceptance evidence
+## End-to-end acceptance evidence
 
 The packaged pipeline was executed on CUDA for development case `MSLesSeg_P10_T1`, held-out fold 0. The independent inference result was compared with the frozen Stage12 reference only after inference completed.
 
@@ -124,7 +124,7 @@ Committed evidence: `evidence/acceptance/MSLesSeg_P10_T1_ACCEPTANCE.json`
 
 This establishes one-case implementation/replay parity. In addition,
 `evidence/acceptance/NO_DRIVE_EVALUATOR_ACCEPTANCE.json` records a successful
-fresh-clone evaluator-path execution using the public release assets rather
+fresh-clone reproducibility execution using the public release assets rather
 than the original Drive model workspace. Neither acceptance expands the
 scientific claim beyond the frozen development five-fold CV result.
 
@@ -138,4 +138,4 @@ scientific claim beyond the frozen development five-fold CV result.
 - Stage13 regressor: **MRI_SPATIAL_RIDGE, alpha=30, mri_spatial**
 - Multi-task branch: **IMPLEMENTED_EVALUATED_AUXILIARY_NOT_PROMOTED**
 
-The showcase adds no retraining, model reselection, threshold change or scientific substitution.
+The repository packaging adds no retraining, model reselection, threshold change, or scientific substitution.
