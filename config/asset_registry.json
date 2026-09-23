@@ -1,19 +1,33 @@
 {
-  "schema_version": 1,
-  "status": "PACKAGING_IN_PROGRESS",
-  "note": "Import original fold-specific artifacts using scripts/setup_assets.py --source-root PATH. Local SHA-256 attestation is supported. Public release assets and end-to-end CUDA acceptance remain pending.",
+  "schema_version": 2,
+  "status": "PUBLIC_RELEASE_NO_DRIVE_EVALUATOR_ACCEPTANCE_PASS",
+  "note": "Frozen neural assets are published through the public assets-v1 GitHub Release. A fresh-clone evaluator-path run completed successfully without the original Drive model workspace, using external MRI inputs and the repository's verified release bootstrap.",
+  "release_distribution": {
+    "tag": "assets-v1",
+    "manifest": "graphms-assets-v1.json",
+    "downloader": "scripts/download_release_assets.py",
+    "publisher": "scripts/publish_release_assets.py",
+    "automatic_patient_bootstrap": true,
+    "integrity": "size + SHA-256 + existing runtime asset verification",
+    "publication_status": "PUBLISHED_AND_EVALUATOR_REPLAY_PASS",
+    "release_url": "https://github.com/sath17-o/GraphMS-Net/releases/tag/assets-v1",
+    "release_asset_count": 18,
+    "manifest_tracked_file_count": 17,
+    "no_drive_evaluator_acceptance": "PASS",
+    "no_drive_evidence": "evidence/acceptance/NO_DRIVE_EVALUATOR_ACCEPTANCE.json"
+  },
   "required_for_patient_inference": [
     {
       "id": "resencm250_fold_models",
-      "status": "PENDING_RELEASE_PACKAGING"
+      "status": "RELEASE_DISTRIBUTION_READY"
     },
     {
       "id": "gat_fold_models",
-      "status": "PENDING_RELEASE_PACKAGING"
+      "status": "RELEASE_DISTRIBUTION_READY"
     },
     {
       "id": "hybrid_fusion_fold_models",
-      "status": "PENDING_RELEASE_PACKAGING"
+      "status": "RELEASE_DISTRIBUTION_READY"
     },
     {
       "id": "demo_or_user_mri_inputs",
@@ -30,6 +44,14 @@
       "path": "pretrained/stage13/stage13_primary_edss_regressor.joblib"
     }
   ],
-  "runtime_status": "IMPLEMENTED_CUDA_ACCEPTANCE_PENDING",
+  "runtime_status": "IMPLEMENTED_ONE_CASE_CUDA_ACCEPTANCE_PASS",
+  "acceptance": {
+    "case_id": "MSLesSeg_P10_T1",
+    "fold": 0,
+    "geometry_matches": true,
+    "mask_matches": true,
+    "mismatched_voxels": 0,
+    "scope": "one-case CUDA acceptance; not all-fold or external validation"
+  },
   "local_import_supported": true
 }

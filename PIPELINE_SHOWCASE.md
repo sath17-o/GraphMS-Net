@@ -69,7 +69,11 @@ Stages 14–16 are development/evaluation modules. They are retained as reproduc
 
 ## One-command patient run
 
-After the original frozen fold assets have been imported with `scripts/setup_assets.py` and the CUDA runtime has passed `scripts/check_neural_runtime.py`:
+After the CUDA runtime has passed `scripts/check_neural_runtime.py`, the
+evaluator supplies the three MRI volumes and runs one command. If the required
+fold is not already present, the runner downloads the frozen assets from the
+`assets-v1` GitHub Release and verifies their SHA-256 identities before
+starting inference:
 
 ```sh
 python run_graphms.py \
@@ -81,6 +85,11 @@ python run_graphms.py \
 ```
 
 For a known development case, its held-out fold is selected automatically and a conflicting fold is rejected. For a case outside the frozen 93-case registry, `--fold 0..4` must be supplied because no new-patient five-fold ensemble rule was validated.
+
+The original Drive workspace is an owner-side publication/recovery source, not
+an evaluator runtime dependency. The public `assets-v1` release has been
+published and a fresh-clone no-original-Drive evaluator-path run completed
+successfully.
 
 ## Output bundle
 
@@ -113,7 +122,11 @@ Committed evidence: `evidence/acceptance/MSLesSeg_P10_T1_ACCEPTANCE.json`
 - mismatched voxels: **0**
 - scope: **one-case CUDA acceptance; not all-fold or external validation**
 
-This establishes one-case implementation/replay parity. It does not expand the scientific claim beyond the frozen development five-fold CV result.
+This establishes one-case implementation/replay parity. In addition,
+`evidence/acceptance/NO_DRIVE_EVALUATOR_ACCEPTANCE.json` records a successful
+fresh-clone evaluator-path execution using the public release assets rather
+than the original Drive model workspace. Neither acceptance expands the
+scientific claim beyond the frozen development five-fold CV result.
 
 ## Frozen scientific identity
 

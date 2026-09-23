@@ -29,16 +29,23 @@ python -m pip install -r requirements-inference.txt
 python scripts/check_neural_runtime.py
 ```
 
-In Colab, first mount the original Drive account:
+### Frozen model assets
 
-```python
-from google.colab import drive
-drive.mount('/content/drive')
+The evaluator does **not** need the original research Drive for neural model
+assets. The public `assets-v1` GitHub Release is published and the fresh-clone
+no-original-Drive evaluator path has passed. `run_graphms.py` first resolves the
+held-out/selected fold, verifies any local assets, and if necessary downloads
+only the required CNN/GAT/Hybrid fold plus the nnU-Net plan/dataset metadata.
+The download is accepted only after size and SHA-256 checks against the release
+manifest, then written into `pretrained/assets.lock.json`.
+
+You can prefetch a fold explicitly:
+
+```sh
+python scripts/download_release_assets.py --folds 0
 ```
 
-Import the frozen artifacts from your existing project. This does not require
-public sharing, a release upload, feature-bank downloads, or retraining.
-For a single development case, import only its held-out fold to save disk/I/O.
+The owner-side fallback remains available for recovery or release creation:
 
 ```sh
 python scripts/setup_assets.py \
@@ -46,26 +53,19 @@ python scripts/setup_assets.py \
   --folds 0
 ```
 
-The importer accepts `MSLesSeg_MS` or its `nnunet_v2` child and reads:
-
-- `nnUNet_results/Dataset001_MSLesSeg/nnUNetTrainer_250epochs__nnUNetResEncUNetMPlans__3d_fullres/`
-- `graphms_resencm250_true_hybrid_v3_5_1_8944f1a0de/outer_folds/outer_N/gat/refit/checkpoint_final.pth`
-- `graphms_resencm250_true_hybrid_v3_5_1_8944f1a0de/outer_folds/outer_N/fusion/refit/checkpoint_final.pth`
-
-It checks checkpoint identities, validates model tensors, verifies copies with
-SHA-256 and records `pretrained/assets.lock.json`. This is a local attestation
-of the explicitly selected originals, not a publisher-signed release. The
-runner rechecks those hashes before loading checkpoints. Only use trusted
-original checkpoints; their PyTorch serialization contains pickle objects.
+The local importer and the release downloader both converge on the same
+`pretrained/` layout and the same runtime `verify_assets` integrity gate.
+Only trusted frozen checkpoints are loaded; PyTorch checkpoint serialization
+contains pickle objects.
 
 Run the known fold-0 development case without loading its ground truth:
 
 ```sh
-python scripts/run_pipeline.py --mode patient \
+python run_graphms.py \
   --case-id MSLesSeg_P10_T1 \
-  --flair /content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/nnUNet_raw/Dataset001_MSLesSeg/imagesTr/MSLesSeg_P10_T1_0000.nii.gz \
-  --t1 /content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/nnUNet_raw/Dataset001_MSLesSeg/imagesTr/MSLesSeg_P10_T1_0001.nii.gz \
-  --t2 /content/drive/MyDrive/MSLesSeg_MS/nnunet_v2/nnUNet_raw/Dataset001_MSLesSeg/imagesTr/MSLesSeg_P10_T1_0002.nii.gz \
+  --flair /path/to/MSLesSeg_P10_T1_0000.nii.gz \
+  --t1 /path/to/MSLesSeg_P10_T1_0001.nii.gz \
+  --t2 /path/to/MSLesSeg_P10_T1_0002.nii.gz \
   --output outputs/MSLesSeg_P10_T1
 ```
 
@@ -107,8 +107,14 @@ The committed record is
 `evidence/acceptance/MSLesSeg_P10_T1_ACCEPTANCE.json`.
 
 This is one-case implementation/replay evidence. It is not an all-fold replay,
-external validation, or a new clinical-performance claim. Public neural-asset
-publication also remains separate from this acceptance result.
+external validation, or a new clinical-performance claim.
+
+The repository has also passed a fresh-clone evaluator-path run in which the
+frozen fold-0 neural assets were obtained from the public `assets-v1` GitHub
+Release, verified locally, and the complete patient pipeline finished with
+`GRAPHMS RESEARCH RUN COMPLETE` without using the original Drive model
+workspace. That separate packaging/runtime acceptance is recorded in
+`evidence/acceptance/NO_DRIVE_EVALUATOR_ACCEPTANCE.json`.
 
 The full one-case acceptance command imports the correct fold, executes the
 pipeline, then compares its mask against the saved frozen Stage12 mask:
