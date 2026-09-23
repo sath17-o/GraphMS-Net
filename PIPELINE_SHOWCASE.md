@@ -87,7 +87,9 @@ python run_graphms.py \
 For a known development case, its held-out fold is selected automatically and a conflicting fold is rejected. For a case outside the frozen 93-case registry, `--fold 0..4` must be supplied because no new-patient five-fold ensemble rule was validated.
 
 The original Drive workspace is an owner-side publication/recovery source, not
-an evaluator runtime dependency once the GitHub Release is published.
+an evaluator runtime dependency. The public `assets-v1` release has been
+published and a fresh-clone no-original-Drive evaluator-path run completed
+successfully.
 
 ## Output bundle
 
@@ -120,7 +122,11 @@ Committed evidence: `evidence/acceptance/MSLesSeg_P10_T1_ACCEPTANCE.json`
 - mismatched voxels: **0**
 - scope: **one-case CUDA acceptance; not all-fold or external validation**
 
-This establishes one-case implementation/replay parity. It does not expand the scientific claim beyond the frozen development five-fold CV result.
+This establishes one-case implementation/replay parity. In addition,
+`evidence/acceptance/NO_DRIVE_EVALUATOR_ACCEPTANCE.json` records a successful
+fresh-clone evaluator-path execution using the public release assets rather
+than the original Drive model workspace. Neither acceptance expands the
+scientific claim beyond the frozen development five-fold CV result.
 
 ## Frozen scientific identity
 
