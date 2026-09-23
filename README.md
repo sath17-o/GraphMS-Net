@@ -9,7 +9,7 @@ GraphMS-Net now exposes the frozen patient path as a single end-to-end applicati
 The evaluator-facing runner is designed to bootstrap the required frozen neural
 fold automatically from the versioned GitHub Release when the weights are not
 already present locally. Every downloaded asset is size- and SHA-256-verified
-before inference. During release publication/testing, the original
+before inference. The `assets-v1` release is published. The original
 `scripts/setup_assets.py --source-root PATH` path remains available as the
 trusted fallback.
 
@@ -138,8 +138,7 @@ publication. See [ASSET_PUBLICATION.md](ASSET_PUBLICATION.md).
 
 Known development cases use their held-out fold. Unseen cases require explicit
 fold selection and remain research runs. A fresh clone needs a CUDA runtime;
-once the `assets-v1` release is published, the required neural weights are
-retrieved automatically rather than requiring access to the original Drive. A one-case end-to-end CUDA acceptance and exact saved-mask comparison have **passed** for `MSLesSeg_P10_T1` (fold 0), with matching geometry and **0 mismatched voxels**. This is implementation/replay evidence only; it is not all-fold or external validation.
+the required neural weights are retrieved automatically from the published `assets-v1` release rather than requiring access to the original Drive. A one-case end-to-end CUDA acceptance and exact saved-mask comparison have **passed** for `MSLesSeg_P10_T1` (fold 0), with matching geometry and **0 mismatched voxels**. This is implementation/replay evidence only; it is not all-fold or external validation.
 
 CPU tests check verbatim v6 primitives, exact GAT/Hybrid forward parity,
 asset tampering, fold protection, image geometry and canonical-feature-to-risk
