@@ -123,16 +123,16 @@ def main() -> None:
             )
 
         for src, _, asset_name in pairs:
-            # gh supports NAME#LABEL syntax poorly across versions; copy to a
-            # stable release filename instead.
+            # Stage and upload one file at a time. This keeps temporary disk
+            # usage bounded by the largest checkpoint (~819 MB) and ensures
+            # the release asset has the stable evaluator-facing filename.
             staged = td / asset_name
-            if staged.exists():
-                staged.unlink()
+            staged.unlink(missing_ok=True)
+            shutil.copyfile(src, staged)
             try:
-                staged.symlink_to(src)
-            except OSError:
-                shutil.copyfile(src, staged)
-            run("gh", "release", "upload", args.tag, str(staged), "--clobber")
+                run("gh", "release", "upload", args.tag, str(staged), "--clobber")
+            finally:
+                staged.unlink(missing_ok=True)
 
         run("gh", "release", "upload", args.tag, str(manifest_path), "--clobber")
 
