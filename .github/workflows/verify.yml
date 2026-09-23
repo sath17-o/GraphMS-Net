@@ -16,6 +16,21 @@ jobs:
         run: python -m pip install -r requirements-verify.txt
       - name: Compile evaluator and release tooling
         run: python -m py_compile run_graphms.py scripts/download_release_assets.py scripts/publish_release_assets.py graphms/release_assets.py
+      - name: Validate evaluator Colab notebook
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          p = Path("notebooks/GraphMS_Evaluator_Colab.ipynb")
+          nb = json.loads(p.read_text())
+          assert nb["nbformat"] == 4
+          code_cells = [c for c in nb["cells"] if c.get("cell_type") == "code"]
+          assert code_cells, "Evaluator notebook has no code cells"
+          for i, cell in enumerate(code_cells):
+              compile("".join(cell.get("source", [])), f"{p}:code_cell_{i}", "exec")
+          print(f"EVALUATOR NOTEBOOK STATIC PASS: {len(code_cells)} code cells")
+          PY
       - name: Verify frozen manifests and audits
         run: python scripts/run_pipeline.py --mode verify
       - name: Replay Stage16 fold aggregation

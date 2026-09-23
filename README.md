@@ -4,6 +4,18 @@
 
 GraphMS-Net now exposes the frozen patient path as a single end-to-end application. For the complete module-by-module map, see [PIPELINE_SHOWCASE.md](PIPELINE_SHOWCASE.md).
 
+## One-click evaluator notebook
+
+For the simplest guide/evaluator workflow, open the complete Colab runner:
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/sath17-o/GraphMS-Net/blob/main/notebooks/GraphMS_Evaluator_Colab.ipynb)
+
+Notebook source: [`notebooks/GraphMS_Evaluator_Colab.ipynb`](notebooks/GraphMS_Evaluator_Colab.ipynb)
+
+The notebook performs the evaluator workflow in order: GPU check → fresh clone of `main` → pinned environment install → frozen repository verification → Stage16 aggregate replay → MRI upload → fold resolution → GitHub Release asset download + SHA-256 verification → complete GraphMS patient inference → output inspection → overlay/report display → provenance checks → downloadable result ZIP.
+
+The evaluator only supplies the co-registered **FLAIR, T1 and T2** NIfTI inputs. The original GraphMS research Drive is not required for the neural model assets.
+
 ## One-command patient showcase
 
 The evaluator-facing runner is designed to bootstrap the required frozen neural
