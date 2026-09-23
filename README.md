@@ -49,7 +49,7 @@ For reviewer-facing inspection of the frozen segmentation behavior, use the dedi
 
 [**Open Segmentation Validation Audit in Google Colab**](https://colab.research.google.com/github/sath17-o/GraphMS-Net/blob/main/notebooks/GraphMS_Segmentation_Audit.ipynb)
 
-It deterministically renders best/median/worst OOF cases as **FLAIR | expert ground truth | frozen prediction | TP/FP/FN error map**, then computes DSC/HD95 distributions, fold-wise DSC, lesion-burden quartiles, worst-case error direction, and a compact diagnostics bundle. The frozen 93-case record shows a residual small-lesion sensitivity weakness; see [`docs/SEGMENTATION_COHORT_DIAGNOSTICS.md`](docs/SEGMENTATION_COHORT_DIAGNOSTICS.md). No model or Stage11 retuning is performed.
+It deterministically renders best/median/worst OOF cases as **FLAIR | expert ground truth | frozen prediction | TP/FP/FN error map**, then computes DSC/HD95 distributions, fold-wise DSC, lesion-burden quartiles, worst-case error direction, and a compact diagnostics bundle. The frozen 93-case record shows a residual low-lesion-burden / missed-lesion sensitivity weakness; see [`docs/SEGMENTATION_COHORT_DIAGNOSTICS.md`](docs/SEGMENTATION_COHORT_DIAGNOSTICS.md). No model or Stage11 retuning is performed.
 
 Final guide-alignment closure is summarized in [`docs/GUIDE_CLOSURE.md`](docs/GUIDE_CLOSURE.md), including the same-cohort CNN/CATMIL/GAT/Hybrid comparison, morphology disposition, and the 16-stage implementation/evidence matrix. This adds no retraining or scientific-result changes.
 
