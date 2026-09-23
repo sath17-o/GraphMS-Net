@@ -29,16 +29,22 @@ python -m pip install -r requirements-inference.txt
 python scripts/check_neural_runtime.py
 ```
 
-In Colab, first mount the original Drive account:
+### Frozen model assets
 
-```python
-from google.colab import drive
-drive.mount('/content/drive')
+The evaluator does **not** need the original research Drive once the
+`assets-v1` GitHub Release is published. `run_graphms.py` first resolves the
+held-out/selected fold, verifies any local assets, and if necessary downloads
+only the required CNN/GAT/Hybrid fold plus the nnU-Net plan/dataset metadata.
+The download is accepted only after size and SHA-256 checks against the release
+manifest, then written into `pretrained/assets.lock.json`.
+
+You can prefetch a fold explicitly:
+
+```sh
+python scripts/download_release_assets.py --folds 0
 ```
 
-Import the frozen artifacts from your existing project. This does not require
-public sharing, a release upload, feature-bank downloads, or retraining.
-For a single development case, import only its held-out fold to save disk/I/O.
+The owner-side fallback remains available for recovery or release creation:
 
 ```sh
 python scripts/setup_assets.py \
@@ -46,17 +52,10 @@ python scripts/setup_assets.py \
   --folds 0
 ```
 
-The importer accepts `MSLesSeg_MS` or its `nnunet_v2` child and reads:
-
-- `nnUNet_results/Dataset001_MSLesSeg/nnUNetTrainer_250epochs__nnUNetResEncUNetMPlans__3d_fullres/`
-- `graphms_resencm250_true_hybrid_v3_5_1_8944f1a0de/outer_folds/outer_N/gat/refit/checkpoint_final.pth`
-- `graphms_resencm250_true_hybrid_v3_5_1_8944f1a0de/outer_folds/outer_N/fusion/refit/checkpoint_final.pth`
-
-It checks checkpoint identities, validates model tensors, verifies copies with
-SHA-256 and records `pretrained/assets.lock.json`. This is a local attestation
-of the explicitly selected originals, not a publisher-signed release. The
-runner rechecks those hashes before loading checkpoints. Only use trusted
-original checkpoints; their PyTorch serialization contains pickle objects.
+The local importer and the release downloader both converge on the same
+`pretrained/` layout and the same runtime `verify_assets` integrity gate.
+Only trusted frozen checkpoints are loaded; PyTorch checkpoint serialization
+contains pickle objects.
 
 Run the known fold-0 development case without loading its ground truth:
 
