@@ -15,13 +15,16 @@ No ground-truth lesion mask, EDSS record, or patient metadata is bundled here.
 
 ## Source and licence
 
-These demonstration MRI data are derived from:
+These demonstration MRI data correspond to the MSLesSeg development case
+`MSLesSeg_P10_T1` and are derived from:
 
-Ali M. Muslim, **Brain MRI Dataset of Multiple Sclerosis with Consensus Manual
-Lesion Segmentation and Patient Meta Information**, Mendeley Data, Version 1,
-2022. DOI: https://doi.org/10.17632/8bctsm8jz7.1
+Francesco Guarnera, Alessia Rondinella, Elena Crispino *et al.*,
+**MSLesSeg: baseline and benchmarking of a new Multiple Sclerosis Lesion
+Segmentation dataset**, *Scientific Data* 12, 920 (2025).
+Article DOI: https://doi.org/10.1038/s41597-025-05250-y
+Dataset record: https://doi.org/10.6084/m9.figshare.27919209
 
-The source dataset is published under the **Creative Commons Attribution 4.0
+MSLesSeg is distributed under the **Creative Commons Attribution 4.0
 International (CC BY 4.0)** licence:
 https://creativecommons.org/licenses/by/4.0/
 
