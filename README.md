@@ -3,9 +3,9 @@
 **Graph-aware multimodal 3-D MRI research pipeline for multiple-sclerosis lesion segmentation, lesion characterization, and downstream MRI-derived EDSS/risk modeling**
 
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/sath17-o/GraphMS-Net/blob/main/notebooks/GraphMS_Evaluator_Colab.ipynb)
-[![Verify frozen GraphMS package](https://github.com/sath17-o/GraphMS-Net/actions/workflows/verify.yml/badge.svg)](https://github.com/sath17-o/GraphMS-Net/actions/workflows/verify.yml)
+[![Verify GraphMS research package](https://github.com/sath17-o/GraphMS-Net/actions/workflows/verify.yml/badge.svg)](https://github.com/sath17-o/GraphMS-Net/actions/workflows/verify.yml)
 
-GraphMS-Net packages the frozen **GraphMS v3.5.1 Hybrid** research system as a reproducible inference and evaluation repository. The repository preserves the selected scientific pipeline, its associated implementation identities, downstream models, evaluation artifacts, and provenance checks. Repository packaging does **not** retrain, re-select, or modify the frozen scientific result.
+GraphMS-Net provides the finalized **GraphMS v3.5.1 Hybrid** research system as a reproducible inference and evaluation repository. The repository preserves the selected scientific pipeline, implementation identities, downstream models, evaluation artifacts, and provenance checks. Repository packaging does **not** retrain, re-select, or alter the finalized scientific result.
 
 The primary research claim remains **development five-fold cross-validation**. This repository does not present the reported performance as independent external validation or as evidence of clinical deployment readiness.
 
@@ -22,14 +22,17 @@ The primary research claim remains **development five-fold cross-validation**. T
 | Sensitivity | **0.745722782031 ± 0.061037864849** |
 | Specificity | **0.999688903970 ± 0.000205231021** |
 | HD95 | **8.643581867636 ± 2.269264959846 mm** |
+| Segmentation precision | **0.777737 ± 0.039188** |
+| Lesion F1 — any overlap | **0.744368 ± 0.029950** |
+| Lesion F1 — IoU ≥ 0.10 | **0.730296 ± 0.033212** |
 | Stage13 fixed-OOF ROC-AUC | **0.747453703704** |
 | Stage13 fixed-OOF RMSE | **1.671117674945** |
-| Stage12–16 audits | **20/20, 33/33, 28/28, 26/26, 36/36 PASS** |
-| Exact CUDA mask replay | **PASS — 0 mismatched voxels** |
+| Stage12–16 verification checks | **20/20, 33/33, 28/28, 26/26, 36/36 PASS** |
+| CUDA reproducibility replay | **PASS — 0 mismatched voxels** |
 | Public-release reproducibility execution | **PASS** |
 | Claim scope | **development five-fold CV; not external clinical validation** |
 
-The Colab notebook expands this summary into the complete Stage13 and Stage16 metric record, per-fold and per-case segmentation results, methodological/audit evidence, and a ground-truth-free patient-level reproducibility run.
+The Colab notebook expands this summary into the complete Stage13 and Stage16 metric record, per-fold and per-case segmentation results, methodological verification evidence, and a ground-truth-free patient-level reproducibility run.
 
 ## Reproducibility notebook
 
@@ -39,21 +42,21 @@ The recommended entry point is the Colab reproducibility notebook:
 
 Notebook source: [`notebooks/GraphMS_Evaluator_Colab.ipynb`](notebooks/GraphMS_Evaluator_Colab.ipynb)
 
-The default notebook execution is **zero-upload**. It reconstructs the attributed `MSLesSeg_P10_T1` FLAIR/T1/T2 demonstration triplet bundled with the repository, verifies the three inputs by SHA-256, verifies the frozen research package, and presents the complete committed quantitative research record before patient-level inference. This includes Stage16 aggregate, per-fold, and all 93 case-level segmentation metrics; the complete frozen Stage13 classification and regression metric sets; Stage11 post-processing recipes; Stage12 integrity; Stage14 task status; Stage15 training provenance; Stage12–16 audit counts; and implementation-acceptance evidence. It then resolves the appropriate development fold, downloads and verifies the corresponding frozen neural assets from the public `assets-v1` GitHub Release, executes the complete patient-level pipeline, displays the segmentation and downstream outputs, verifies provenance, and packages the generated results.
+The default notebook execution is **zero-upload**. It reconstructs the attributed `MSLesSeg_P10_T1` FLAIR/T1/T2 demonstration triplet bundled with the repository, verifies the three inputs by SHA-256, verifies the frozen research package, and presents the complete committed quantitative research record before patient-level inference. This includes Stage16 aggregate, per-fold, and all 93 case-level segmentation metrics; the complete Stage13 classification and regression metric sets; Stage11 post-processing recipes; Stage12 integrity; Stage14 task status; Stage15 training provenance; Stage12–16 verification counts; and implementation-reproducibility evidence. It then resolves the appropriate development fold, downloads and verifies the corresponding frozen neural assets from the public `assets-v1` GitHub Release, executes the complete patient-level pipeline, displays the segmentation and downstream outputs, verifies provenance, and packages the generated results.
 
 For an independent MRI case, set `USE_BUNDLED_DEMO = False` in the notebook and provide a co-registered FLAIR/T1/T2 NIfTI triplet. Cases outside the frozen development registry require an explicitly selected fold because no new-patient five-fold ensemble rule was validated.
 
-## Segmentation diagnostic audit
+## Segmentation cohort evaluation
 
-For reviewer-facing inspection of the frozen segmentation behavior, use the dedicated no-retraining notebook:
+For qualitative and quantitative analysis of the finalized segmentation behavior, use the dedicated no-retraining notebook:
 
-[**Open Segmentation Validation Audit in Google Colab**](https://colab.research.google.com/github/sath17-o/GraphMS-Net/blob/main/notebooks/GraphMS_Segmentation_Audit.ipynb)
+[**Open Segmentation Cohort Evaluation in Google Colab**](https://colab.research.google.com/github/sath17-o/GraphMS-Net/blob/main/notebooks/GraphMS_Segmentation_Evaluation.ipynb)
 
 It deterministically renders best/median/worst OOF cases as **FLAIR | expert ground truth | frozen prediction | TP/FP/FN error map**, adds a six-case qualitative diversity panel and an **HD95-driven boundary-focused panel**, then computes DSC/HD95 distributions, fold-wise DSC, lesion-burden quartiles, worst-case error direction, and a compact diagnostics bundle. The frozen 93-case record shows a residual low-lesion-burden / missed-lesion sensitivity weakness; see [`docs/SEGMENTATION_COHORT_DIAGNOSTICS.md`](docs/SEGMENTATION_COHORT_DIAGNOSTICS.md). No model or Stage11 retuning is performed.
 
-Final guide-alignment closure is summarized in [`docs/GUIDE_CLOSURE.md`](docs/GUIDE_CLOSURE.md), including the same-cohort CNN/CATMIL/GAT/Hybrid comparison, morphology disposition, and the 16-stage implementation/evidence matrix. This adds no retraining or scientific-result changes. The final audit also adds the remaining no-training Stage16 precision and lesion-level F1 closure (any-overlap and IoU≥0.10 component matching) from the same frozen 93-case masks.
+Stage-level implementation evidence is summarized in [`docs/STAGE_IMPLEMENTATION_MATRIX.md`](docs/STAGE_IMPLEMENTATION_MATRIX.md), including the same-cohort CNN/CATMIL/GAT/Hybrid comparison, morphology disposition, and the complete 16-stage implementation matrix. This adds no retraining or scientific-result changes. The final evaluation also reports Stage16 segmentation precision and lesion-level F1 (any-overlap and IoU≥0.10 component matching) from the same finalized 93-case masks.
 
-## Frozen scientific identity
+## Scientific configuration
 
 | Component | Frozen specification |
 |---|---|
@@ -68,9 +71,9 @@ Final guide-alignment closure is summarized in [`docs/GUIDE_CLOSURE.md`](docs/GU
 | Stage14 status | `IMPLEMENTED_EVALUATED_AUXILIARY_NOT_PROMOTED` |
 | Scientific claim scope | development five-fold cross-validation |
 
-## Frozen inference architecture
+## Final inference architecture
 
-The patient-level runtime executes the selected frozen path:
+The patient-level runtime executes the selected finalized path:
 
 ```text
 FLAIR + T1 + T2
@@ -149,6 +152,9 @@ The frozen Stage16 five-fold aggregate is:
 | Sensitivity | **0.745722782031 ± 0.061037864849** |
 | Specificity | **0.999688903970 ± 0.000205231021** |
 | HD95 | **8.643581867636 ± 2.269264959846 mm** |
+| Segmentation precision | **0.777737 ± 0.039188** |
+| Lesion F1 — any overlap | **0.744368 ± 0.029950** |
+| Lesion F1 — IoU ≥ 0.10 | **0.730296 ± 0.033212** |
 
 These values are reproduced from the frozen **93-case development five-fold evaluation table**. They are not presented as independent external-test performance.
 
@@ -158,20 +164,20 @@ The aggregate can be replayed locally with:
 python scripts/run_pipeline.py --mode evaluation-replay
 ```
 
-## Reproducibility and acceptance evidence
+## Reproducibility and verification evidence
 
 The repository includes several distinct forms of implementation evidence.
 
 | Evidence | Status | Scope |
 |---|---|---|
-| Frozen manifests and Stage12-16 audits | PASS | repository/package integrity |
+| Versioned manifests and Stage12–16 verification records | PASS | repository/package integrity |
 | CPU source-parity and inference-contract tests | PASS | implementation contracts and frozen primitive parity |
 | Stage13 local inference smoke test | PASS | committed SVM/Ridge runtime |
 | `MSLesSeg_P10_T1` CUDA end-to-end replay | PASS | one development case, held-out fold 0 |
 | Exact final-mask comparison for `MSLesSeg_P10_T1` | PASS | matching geometry; 0 mismatched voxels |
 | Fresh-clone public-release execution without original model Drive | PASS | packaging/runtime reproducibility |
 
-Committed acceptance records:
+Committed verification records:
 
 - [`evidence/acceptance/MSLesSeg_P10_T1_ACCEPTANCE.json`](evidence/acceptance/MSLesSeg_P10_T1_ACCEPTANCE.json)
 - [`evidence/acceptance/NO_DRIVE_EVALUATOR_ACCEPTANCE.json`](evidence/acceptance/NO_DRIVE_EVALUATOR_ACCEPTANCE.json)
@@ -194,7 +200,7 @@ python -m pip install -r requirements-inference.txt
 python scripts/check_neural_runtime.py
 ```
 
-The accepted neural environment used PyTorch 2.8.0 with CUDA 12.6 and `nnunetv2==2.8.1`. The full mixed-precision 3-D neural path requires CUDA; package verification and Stage16 aggregate replay remain CPU-capable.
+The verified neural environment used PyTorch 2.8.0 with CUDA 12.6 and `nnunetv2==2.8.1`. The full mixed-precision 3-D neural path requires CUDA; package verification and Stage16 aggregate replay remain CPU-capable.
 
 ## Demonstration MRI data
 
@@ -202,9 +208,9 @@ The zero-upload Colab workflow uses only the three MRI volumes required for the 
 
 Source:
 
-Ali M. Muslim, *Brain MRI Dataset of Multiple Sclerosis with Consensus Manual Lesion Segmentation and Patient Meta Information*, Mendeley Data, Version 1 (2022), DOI: `10.17632/8bctsm8jz7.1`.
+Francesco Guarnera, Alessia Rondinella, Elena Crispino *et al.*, *MSLesSeg: baseline and benchmarking of a new Multiple Sclerosis Lesion Segmentation dataset*, **Scientific Data 12, 920 (2025)**, DOI: `10.1038/s41597-025-05250-y`. Dataset record: `10.6084/m9.figshare.27919209`.
 
-The source dataset is distributed under **CC BY 4.0**. Attribution and reconstruction details are documented in [`demo_inputs/README.md`](demo_inputs/README.md). The demonstration files are verified by SHA-256 before use.
+MSLesSeg is distributed under **CC BY 4.0**. Attribution and reconstruction details are documented in [`demo_inputs/README.md`](demo_inputs/README.md). The demonstration files are verified by SHA-256 before use.
 
 ## Repository structure
 
@@ -213,7 +219,7 @@ GraphMS-Net/
 ├── graphms/                  frozen runtime implementation
 ├── config/                   protocol and asset registries
 ├── results/                  frozen Stage12-16 research artifacts
-├── evidence/acceptance/      committed reproducibility evidence
+├── evidence/acceptance/      committed reproducibility verification records
 ├── pretrained/               local verified asset layout
 ├── demo_inputs/              attributed reproducibility MRI triplet
 ├── notebooks/                Colab reproducibility notebook
@@ -229,12 +235,11 @@ GraphMS-Net/
 GraphMS-Net is a research reproducibility package. The current repository should be interpreted under the following constraints:
 
 1. Reported segmentation performance is based on **development five-fold cross-validation**, not untouched external validation.
-2. The one-case CUDA acceptance is an implementation/replay check; it is not an all-fold validation study.
+2. The one-case CUDA replay is an implementation/reproducibility check; it is not an all-fold validation study.
 3. The Stage14 true multi-task branch was implemented and evaluated but was **not promoted** into the final segmentation system.
 4. Stage13 uses frozen classical SVM/Ridge models; neural training settings do not describe those downstream estimators.
 5. No unvalidated five-fold ensemble rule is introduced for a new patient. External cases require an explicitly selected fold and remain research runs.
-6. No additional BET/N4/ANTs preprocessing is inserted into patient inference; the runtime uses the frozen nnU-Net preprocessing plan.
-7. The repository and generated outputs are intended for research and reproducibility, not clinical diagnosis or treatment decision-making.
+6. The repository and generated outputs are intended for research and reproducibility, not clinical diagnosis or treatment decision-making.
 
 ## Documentation
 
