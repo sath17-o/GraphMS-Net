@@ -1,4 +1,4 @@
-# GraphMS-Net — Frozen Pipeline Architecture and Reproducibility Map
+# GraphMS-Net — Pipeline Architecture and Reproducibility Map
 
 This document maps the frozen GraphMS research pipeline to its repository implementation and committed evidence. A co-registered **FLAIR, T1 and T2** MRI triplet is propagated through the selected frozen inference path to generate lesion segmentation, lesion-level characterization, downstream MRI-derived EDSS/risk research outputs, visualization, reporting, and provenance.
 
@@ -60,7 +60,7 @@ overlay.png + CSV + JSON + NIfTI + patient_report.html + provenance
 | Stage12 lesion analysis | `graphms/stage12/canonical_v2_1_source.py` | Patient inference |
 | Stage13 EDSS/risk | `graphms/stage13.py` + committed SVM/Ridge artifacts | Patient inference |
 | Stage14 multi-task branch | `results/stage14/` | Research evidence; evaluated, auxiliary, not promoted |
-| Stage15 training/configuration audit | `results/stage15/` | Research evidence |
+| Stage15 training/configuration verification | `results/stage15/` | Research evidence |
 | Stage16 final evaluation | `results/stage16/`, `scripts/replay_stage16.py` | Research evaluation evidence |
 | Report + visualization | `graphms/report.py` | Patient inference |
 | Reproducibility/provenance | `graphms/assets.py`, `provenance.json`, `COMPLETE.json` | Every completed patient run |
@@ -110,23 +110,23 @@ outputs/<case-id>/
 
 The output directory is written atomically. Failed runs do not leave a false completion record.
 
-## End-to-end acceptance evidence
+## End-to-end reproducibility verification
 
 The packaged pipeline was executed on CUDA for development case `MSLesSeg_P10_T1`, held-out fold 0. The independent inference result was compared with the frozen Stage12 reference only after inference completed.
 
-Committed evidence: `evidence/acceptance/MSLesSeg_P10_T1_ACCEPTANCE.json`
+Committed verification record: `evidence/acceptance/MSLesSeg_P10_T1_ACCEPTANCE.json`
 
 - status: **PASS**
 - geometry match: **true**
 - exact binary mask match: **true**
 - mismatched voxels: **0**
-- scope: **one-case CUDA acceptance; not all-fold or external validation**
+- scope: **one-case CUDA reproducibility verification; not all-fold or external validation**
 
 This establishes one-case implementation/replay parity. In addition,
 `evidence/acceptance/NO_DRIVE_EVALUATOR_ACCEPTANCE.json` records a successful
 fresh-clone reproducibility execution using the public release assets rather
-than the original Drive model workspace. Neither acceptance expands the
-scientific claim beyond the frozen development five-fold CV result.
+than the original Drive model workspace. Neither verification record expands the
+scientific claim beyond the finalized development five-fold CV result.
 
 ## Frozen scientific identity
 
