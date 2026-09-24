@@ -79,4 +79,4 @@ python scripts/setup_assets.py --folds 0
 
 The first command must end with `FROZEN RELEASE ASSETS VERIFIED: 0`; the second independently rechecks `pretrained/assets.lock.json`.
 
-Then run the normal one-command patient showcase. No original Drive mount should be present during that final evaluator-path test.
+Then run the normal one-command patient showcase. No original Drive mount should be present during that final reproducibility-path test.
