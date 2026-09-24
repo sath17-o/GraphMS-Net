@@ -50,20 +50,20 @@ The companion notebook selects cases deterministically from the committed DSC co
 
 For each case the notebook renders **FLAIR | expert ground truth | frozen final prediction | TP/FP/FN error map**. The worst case is deliberately retained rather than hidden.
 
-## Submission interpretation
+## Interpretation
 
-The new diagnostic evidence strengthens the segmentation section without creating a new scientific system. The frozen checkpoints, nnU-Net preprocessing lineage, GraphMS Hybrid architecture, cross-fitted Stage11 recipes, and Stage16 headline metrics remain unchanged.
+The diagnostic evidence characterizes segmentation behavior without creating a new scientific system. The frozen checkpoints, nnU-Net preprocessing lineage, GraphMS Hybrid architecture, cross-fitted Stage11 recipes, and Stage16 headline metrics remain unchanged.
 
 The residual weakness is stated directly: **case performance is heterogeneous, and the lower-DSC tail is concentrated in lower lesion burden with predominantly missed-lesion error.**
 
-Notebook: `notebooks/GraphMS_Segmentation_Audit.ipynb`
+Notebook: `notebooks/GraphMS_Segmentation_Evaluation.ipynb`
 
 
 ## Multi-case and boundary-focused visuals
 
-The audit now includes two additional reviewer-facing figures generated from the frozen OOF masks and original development MRI volumes, with no retraining or retuning:
+The analysis includes two additional qualitative figures generated from the frozen OOF masks and original development MRI volumes, with no retraining or retuning:
 
 - **Multi-case qualitative panel:** six deterministic cases spanning best/median/worst performance and lesion-burden diversity.
 - **Boundary-focused panel:** four deterministic cases selected through HD95, including clean boundary agreement, a moderate-boundary example, a high-DSC / poor-boundary case, and the maximum-HD95 failure case.
 
-The boundary panel operationalizes the guide's request for "boundary cases" using the project's frozen boundary-distance metric rather than subjective visual selection. Ground truth is used only for retrospective visualization and case selection.
+The boundary panel characterizes boundary behavior using the project's finalized HD95 metric rather than subjective visual selection. Ground truth is used only for retrospective visualization and case selection.
